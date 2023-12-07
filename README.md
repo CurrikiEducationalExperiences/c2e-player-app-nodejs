@@ -1,1 +1,1 @@
-# c2e-lti-app-nodejs
+# c2e-player-app-nodejs
