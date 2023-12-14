@@ -1,0 +1,52 @@
+const Router = require('../../routes/routes');
+
+describe('route/accounts', () => {
+  it('should have expected api for /grade route', async () => {
+    const path = '/grade';
+    const result = await Router.stack.find((s) => s.route.path === path);
+    expect(result).not.toBeUndefined();
+    expect(result.route.path).toEqual(path);
+    expect(result.route.methods).toEqual({ post: true });
+  });
+
+  it('should have expected api for /deeplink route', async () => {
+    const path = '/deeplink';
+    const result = await Router.stack.find((s) => s.route.path === path);
+    expect(result).not.toBeUndefined();
+    expect(result.route.path).toEqual(path);
+    expect(result.route.methods).toEqual({ post: true });
+  });
+
+  it('should have expected api for /members route', async () => {
+    const path = '/members';
+    const result = await Router.stack.find((s) => s.route.path === path);
+    expect(result).not.toBeUndefined();
+    expect(result.route.path).toEqual(path);
+    expect(result.route.methods).toEqual({ get: true });
+  });
+
+  it('should have expected api for /info route', async () => {
+    const path = '/info';
+    const result = await Router.stack.find((s) => s.route.path === path);
+    expect(result).not.toBeUndefined();
+    expect(result.route.path).toEqual(path);
+    expect(result.route.methods).toEqual({ get: true });
+  });
+
+  it('should have expected api for /resources route', async () => {
+    const path = '/resources';
+    const result = await Router.stack.find((s) => s.route.path === path);
+    expect(result).not.toBeUndefined();
+    expect(result.route.path).toEqual(path);
+    expect(result.route.methods).toEqual({ get: true });
+  });
+
+  it('should have expected api for /stream route', async () => {
+    const path = '/stream';
+    const result = await Router.stack.find((s) => s.route.path === path);
+    expect(result).not.toBeUndefined();
+    expect(result.route.path).toEqual(path);
+    expect(result.route.methods).toEqual({ get: true });
+  });
+
+});

@@ -1,0 +1,194 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "C2E-PLAYER-APP-NODEJS"
+  },
+  "basePath": "/api/v1/",
+  "schemes": ["http"],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "x-swagger-router-controller": "users",
+        "operationId": "user-register",
+        "tags": ["User"],
+        "summary": "Account Registration Endpoint",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "User details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Mehmood Hussain"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "+923000628070"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "mehmoodce@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "TheMostSecurePassword123#"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "result": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "x-swagger-router-controller": "users",
+        "operationId": "user-login",
+        "tags": ["User"],
+        "summary": "Account Signin Endpoint",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "User credentials",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "mehmoodce@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "TheMostSecurePassword123#"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "result": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoibWVobW9vZC5odXNzYWluQHRreGVsLmNvbSIsImlhdCI6MTcwMjM3NzQ0MiwiZXhwIjoxNzAyNDYzODQyfQ.bFyvfascg7Xmvi2-RTwDaXegKMh226WQ7aPsGE40wx4"
+                }
+              }
+            }
+          }
+        },
+        "respons": {
+          "200": {
+            "description": "api status",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "api status"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/getProfile": {
+      "get": {
+        "x-swagger-router-controller": "users",
+        "operationId": "View Profile",
+        "tags": ["User"],
+        "summary": "Get Profile",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "result": {
+                  "type": "object",
+                  "example": {
+                    "id": 1,
+                    "name": "Mehmood Hussain",
+                    "email": "mehmood.hussain@tkxel.com",
+                    "phone": "+92300000000",
+                    "createdAt": "2023-12-12T10:23:55.242Z",
+                    "updatedAt": "2023-12-12T11:09:37.077Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "respons": {
+          "200": {
+            "description": "api status",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "api status"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
