@@ -9,7 +9,7 @@ const validationMiddleware = (validationObject, isGet = false) => (req, res, nex
     errMessage = errMessage.replace(/[[\]""]+/g, '');
     return res
       .status(400)
-      .send({ code: 400, message: errMessage });
+      .send({ code: 400, message: errMessage, result: null });
   }
   return next();
 };
