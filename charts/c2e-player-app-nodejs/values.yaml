@@ -7,4 +7,4 @@ fullnameOverride: ''
 
 MULTIPLE_TG: ''
 CERTIFICATE_ARN: ''
-COMMON_NAME: 'c2e-player-service'
+COMMON_NAME: 'c2e-player-app-nodejs'
