@@ -76,6 +76,17 @@ class ltiController {
     }  
   }
 
+  static async xapi(req, res) {
+    try {
+      const result = await ltiService.xapi(req, res);
+      if (!result) return res.status(400).send("No xAPI statement provided.");
+      return res.send(result);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).send({ err: err.message });
+    }  
+  }
+
   static async registerPlatform(req, res) {
     try {
       const result = await ltiService.registerPlatform(req.body);

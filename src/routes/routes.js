@@ -8,9 +8,11 @@ const ltiRouter = express.Router();
 ltiRouter.post("/grade", ltiController.grade);
 ltiRouter.get("/members", ltiController.members);
 ltiRouter.post("/deeplink", ltiController.deeplink);
+ltiRouter.post("/play", ltiController.play);
 ltiRouter.get("/info", ltiController.info);
 ltiRouter.get("/resources", ltiController.resources);
 ltiRouter.get("/stream", ltiController.stream);
+ltiRouter.get("/xapi/statements", ltiController.xapi);
 ltiRouter.get("/platfrom/register", validationMiddleware(ltiValidations.registerPlatform), ltiController.registerPlatform);
 
 ltiRouter.get("*", (req, res) =>
