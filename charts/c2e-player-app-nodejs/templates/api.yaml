@@ -43,5 +43,5 @@ spec:
     app: {{.Values.COMMON_NAME}}
   ports:
     - protocol: TCP
-      port: 3000
-      targetPort: 3000
+      port: 4000
+      targetPort: 4000
