@@ -17,7 +17,7 @@ spec:
       containers:
       - envFrom:
         - configMapRef:
-            name: lti-player-service-config
+            name: c2e-player-app-nodejs-config
         name: {{.Values.COMMON_NAME}}
         image: {{.Values.image.repository}}
         imagePullPolicy: {{.Values.image.pullPolicy}}
@@ -25,13 +25,13 @@ spec:
           - containerPort: 80
         volumeMounts:
         - mountPath: /app/.env
-          name: lti-player-service-config
+          name: c2e-player-app-nodejs-config
           subPath: .env
       volumes:
       - configMap:
           defaultMode: 420
-          name: lti-player-service-config
-        name: lti-player-service-config
+          name: c2e-player-app-nodejs-config
+        name: c2e-player-app-nodejs-config
 
 ---
 apiVersion: v1
