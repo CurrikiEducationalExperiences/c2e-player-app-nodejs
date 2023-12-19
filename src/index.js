@@ -112,6 +112,17 @@ lti.app.use(routes);
 ///////////// LTI SETUP FUNCTION ///////////
 const setup = async () => {
   await lti.deploy({ serverless: true });
+  await lti.registerPlatform({
+    url: "https://canvas.instructure.com",
+    name: "Curriki Studio",
+    clientId: "208830000000000160",
+    authenticationEndpoint: "https://curriki.instructure.com/api/lti/authorize_redirect",
+    accesstokenEndpoint: "https://curriki.instructure.com/login/oauth2/token",
+    authConfig: {
+      method: "JWK_SET",
+      key: "https://curriki.instructure.com/api/lti/security/jwks",
+    },
+  });
 };
 setup();
 
