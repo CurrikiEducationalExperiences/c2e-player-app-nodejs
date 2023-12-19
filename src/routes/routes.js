@@ -16,7 +16,7 @@ ltiRouter.get("/xapi/statements", ltiController.xapi);
 ltiRouter.post("/platform/register", validationMiddleware(ltiValidations.registerPlatform), ltiController.registerPlatform);
 
 ltiRouter.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "../public/index.html"))
+  res.sendFile(path.join(__dirname, "../../public/index.html"))
 );
 
 module.exports = ltiRouter;
