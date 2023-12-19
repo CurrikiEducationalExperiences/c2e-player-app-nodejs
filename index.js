@@ -7,10 +7,10 @@ const path = require("path");
 const swaggerUi = require("swagger-ui-express");
 const lti = require("ltijs").Provider;
 const Database = require("ltijs-sequelize");
-const swaggerDocument = require("./swagger.json");
-const routes = require("./routes/routes");
-const { setRouter } = require("./routes/api");
-const { globalErrorHandler } = require("./utils/response");
+const swaggerDocument = require("./src/swagger.json");
+const routes = require("./src/routes/routes");
+const { setRouter } = require("./src/routes/api");
+const { globalErrorHandler } = require("./src/utils/response");
 
 const db = new Database(
   process.env.DB_NAME,
@@ -74,7 +74,7 @@ lti.setup(
   },
   {
     tokenMaxAge: false,
-    staticPath: path.join(__dirname, "../public"), //  Path to static files
+    staticPath: path.join(__dirname, "./public"), //  Path to static files
     cookies: {
       secure: false, // Set secure to true if the testing platform is in a different domain and https is being used
       sameSite: "", // Set sameSite to 'None' if the testing platform is in a different domain and https is being used
@@ -94,7 +94,7 @@ lti.setup(
 );
 
 lti.onConnect(async (token, req, res) => {
-  return res.sendFile(path.join(__dirname, "../public/index.html"));
+  return res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 lti.onDeepLinking(async (token, req, res) => {
