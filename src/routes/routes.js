@@ -13,7 +13,7 @@ ltiRouter.get("/info", ltiController.info);
 ltiRouter.get("/resources", ltiController.resources);
 ltiRouter.get("/stream", ltiController.stream);
 ltiRouter.get("/xapi/statements", ltiController.xapi);
-ltiRouter.get("/platfrom/register", validationMiddleware(ltiValidations.registerPlatform), ltiController.registerPlatform);
+ltiRouter.post("/platform/register", validationMiddleware(ltiValidations.registerPlatform), ltiController.registerPlatform);
 
 ltiRouter.get("*", (req, res) =>
   res.sendFile(path.join(__dirname, "../public/index.html"))
