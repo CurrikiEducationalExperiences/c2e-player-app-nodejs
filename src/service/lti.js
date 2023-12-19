@@ -225,9 +225,9 @@ class ltiService {
   }
   
   static async registerPlatform(params) {
-    if (process.env.ADMIN_SECRET != params.secret) res.status(400).send('Invalid secret.');
+    if (process.env.ADMIN_SECRET != params.secret) return false;
 
-    const response = await lti.registerPlatform({
+    await lti.registerPlatform({
       url: params.url,
       name: params.name,
       clientId: params.clientId,
@@ -238,7 +238,7 @@ class ltiService {
         key: params.authConfigKey,
       },
     });
-    return res.status(200).send("Platform registered successfully.");
+    return true;
   }
 }
 module.exports = { ltiService };
