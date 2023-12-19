@@ -74,7 +74,7 @@ lti.setup(
   },
   {
     tokenMaxAge: false,
-    staticPath: path.join(__dirname, "./public"), // Path to static files
+    staticPath: path.join(__dirname, "../public"), // Path to static files
     cookies: {
       secure: false, // Set secure to true if the testing platform is in a different domain and https is being used
       sameSite: "", // Set sameSite to 'None' if the testing platform is in a different domain and https is being used
@@ -94,7 +94,7 @@ lti.setup(
 );
 
 lti.onConnect(async (token, req, res) => {
-  return res.sendFile(path.join(__dirname, "./public/index.html"));
+  return res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 lti.onDeepLinking(async (token, req, res) => {
