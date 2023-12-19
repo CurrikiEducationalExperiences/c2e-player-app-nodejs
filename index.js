@@ -1,6 +1,6 @@
 require('dotenv').config()
 const path = require('path')
-const routes = require('./src/routes')
+const routes = require('./src/routes/routes')
 
 const lti = require('ltijs').Provider
 
