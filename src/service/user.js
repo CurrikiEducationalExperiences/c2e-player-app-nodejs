@@ -1,7 +1,7 @@
 const ERROR_CODES = require("../constant/error-messages");
 const CustomError = require("../utils/error");
-const { User } = require("../models/users");
-const { Accounts } = require("../models/accounts");
+const { User } = require("../../models/users");
+const { Accounts } = require("../../models/accounts");
 const bcrypt = require("bcrypt");
 const { issueToken } = require("../middleware/auth");
 class UserService {
