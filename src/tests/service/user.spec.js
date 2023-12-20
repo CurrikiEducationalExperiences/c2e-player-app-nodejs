@@ -4,11 +4,11 @@ const bcrypt = require("bcrypt");
 
 mockSequelize();
 const { UserService } = require("../../service/user");
-const { User } = require("../../models/users");
+const { User } = require("../../../models/users");
 
 const ERROR_CODES = require("../../constant/error-messages");
 
-jest.mock("../../models/users", () => ({
+jest.mock("../../../models/users", () => ({
   User: {
     create: jest.fn(),
     update: jest.fn(),

@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 const ERROR_CODES = require("../constant/error-messages");
 const CustomError = require("../utils/error");
-const { User } = require("../models/users");
+const { User } = require("../../models/users");
 const authMiddleware = async (req, res, next) => {
   try {
     console.log({ token: req.headers.authorization });

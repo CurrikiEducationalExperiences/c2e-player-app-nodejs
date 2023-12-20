@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("../utils/database");
+const { sequelize } = require("../src/utils/database");
 const Accounts = sequelize.define("accounts", {
   id: {
     autoIncrement: true,
