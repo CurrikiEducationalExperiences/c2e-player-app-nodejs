@@ -1,8 +1,6 @@
 const ERROR_CODES = require("../constant/error-messages");
 const CustomError = require("../utils/error");
-//const sequelize = require('../utils/database');
 const { Accounts } = require("../../models/accounts");
-
 class AccountsService {
   static async post(params) {
     const user = await Accounts.create(params);
@@ -32,4 +30,5 @@ class AccountsService {
     return params;
   }
 }
+
 module.exports = { AccountsService };

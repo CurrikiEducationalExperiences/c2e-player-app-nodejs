@@ -1,6 +1,3 @@
-const Joi = require('joi');
-// const { resetUserPassword } = require('../validations');
-
 const validationMiddleware = (validationObject, isGet = false) => (req, res, next) => {
   const body = isGet ? req.query : req.body;
   const { error } = validationObject.validate(body);

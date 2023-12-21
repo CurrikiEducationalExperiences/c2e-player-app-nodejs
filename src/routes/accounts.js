@@ -1,7 +1,6 @@
 const express = require("express");
-const { AccountsController } = require("../controllers/accounts");
-
 const accountsRouter = express.Router();
+const { AccountsController } = require("../controllers/accounts");
 const validationMiddleware = require("../middleware/validation");
 const accountsValdations = require("../validations/accounts");
 

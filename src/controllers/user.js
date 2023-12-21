@@ -1,7 +1,5 @@
 const { UserService } = require("../service/user");
-
 const { responseHandler } = require("../utils/response");
-
 class UserController {
   static async register(req, res, next) {
     try {

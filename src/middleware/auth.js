@@ -5,7 +5,6 @@ const CustomError = require("../utils/error");
 const { User } = require("../../models/users");
 const authMiddleware = async (req, res, next) => {
   try {
-    console.log({ token: req.headers.authorization });
     if (!req.headers.authorization) {
       throw new CustomError(ERROR_CODES.AUTH_TOKEN_REQUIRED);
     }

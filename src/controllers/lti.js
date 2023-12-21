@@ -1,12 +1,4 @@
-const axios = require("axios");
-const lti = require("ltijs").Provider;
-const licensesUrl = `${process.env.C2E_SERVICES_API_BASE_URL}/licenses`;
-const apiUser = process.env.C2E_SERVICES_API_USER;
-const apiSecret = process.env.C2E_SERVICES_API_SECRET;
-const fileUrl = `${process.env.C2E_SERVICES_API_BASE_URL}/c2e/licensed`;
-const { PlatformSetting } = require("../../models/platformSetting");
 const { ltiService } = require("../service/lti");
-
 class ltiController {
   static async grade(req, res) {
     await ltiService.grade(req, res);

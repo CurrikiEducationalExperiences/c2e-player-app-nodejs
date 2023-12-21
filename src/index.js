@@ -46,9 +46,11 @@ lti.setup(
     },
   }
 );
+
 lti.onConnect(async (token, req, res) => {
   return res.sendFile(path.join(__dirname, "../public/index.html"));
 });
+
 lti.onDeepLinking(async (token, req, res) => {
   if (req.query.c2eId) {
     return lti.redirect(res, `/play`, { newResource: true });
@@ -107,5 +109,7 @@ lti.app.use((err, req, res, next) => globalErrorHandler(err, req, res, next));
 const setup = async () => {
   await lti.deploy({ port: process.env.PORT });
 };
+
 setup();
+
 module.exports = { app: lti.app };
