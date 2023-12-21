@@ -2,6 +2,7 @@ const axios = require("axios");
 const lti = require("ltijs").Provider;
 const { PlatformSetting } = require("../../models/platformSetting");
 const ERROR_CODES = require("../constant/error-messages");
+const SUCCESS_CODES = require("../constant/success-messages");
 class ltiService {
   static async grade(req, res) {
     try {
@@ -109,7 +110,7 @@ class ltiService {
 
   static async resources(req, res) {
     const { page = 1, limit = 10, query = "" } = req.query;
-
+    // need to remove this code as requset filtering is added
     // if (
     //   isNaN(parseInt(page)) ||
     //   isNaN(parseInt(limit)) ||
@@ -142,7 +143,7 @@ class ltiService {
     const licensesUrl = `${platformSettings.cee_provider_url}/licenses`;
     const params = {
       page,
-      limit: 9000,
+      limit: 9000, // needs to update this static value
       query,
       email: platformSettings.cee_licensee_id,
       secret: platformSettings.cee_secret_key,
@@ -284,7 +285,7 @@ class ltiService {
         key: params.authConfigKey,
       },
     });
-    return res.status(200).send(ERROR_CODES.PLATFORM_REGISTERED_SUCCESSFULLY.message);
+    return res.status(200).send(SUCCESS_CODES.PLATFORM_REGISTERED_SUCCESSFULLY.message);
   }
 }
 

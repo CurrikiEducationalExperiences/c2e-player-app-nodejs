@@ -23,9 +23,6 @@ module.exports = {
   INVALID_PARAMETERS: {
     message: "Invalid parameters.",
   },
-  PLATFORM_REGISTERED_SUCCESSFULLY: {
-    message: "Platform registered successfully.",
-  },
   NO_MATCHING_PLATFORM_FOUND: {
     message: "No matching platform settings found",
     description: "Your LTI authentication information doesn't match any existing platform settings in the C2E player", 
