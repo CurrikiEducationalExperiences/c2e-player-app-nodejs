@@ -72,7 +72,7 @@ class ltiService {
       const items = {
         type: "ltiResourceLink",
         title: resource.title,
-        url: `https://c2e-player-app-nodejs-stage.curriki.org/lti/play?c2eId=${resource.id}`,
+        url: `https://c2e-player-app-nodejs-stage.curriki.org/play?c2eId=${resource.id}`,
         custom: {
           name: resource.name,
           value: resource.value,
