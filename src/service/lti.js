@@ -162,7 +162,7 @@ class ltiService {
     const licensesUrl = `${platformSettings.cee_provider_url}/licenses`;
     const params = {
       page,
-      limit: 9000,
+      limit,
       //query,
       email: platformSettings.cee_licensee_id,
       secret: platformSettings.cee_secret_key,
