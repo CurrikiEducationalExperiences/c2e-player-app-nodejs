@@ -9,179 +9,33 @@ const { ltiService } = require("../service/lti");
 
 class ltiController {
   static async grade(req, res) {
-    try {
-      const idtoken = res.locals.token; // IdToken
-      const score = req.body.grade; // User numeric score sent in the body
-      // Creating Grade object
-      const gradeObj = {
-        userId: idtoken.user,
-        scoreGiven: score,
-        scoreMaximum: 100,
-        activityProgress: "Completed",
-        gradingProgress: "FullyGraded",
-      };
-
-      // Selecting linetItem ID
-      let lineItemId = idtoken.platformContext.endpoint.lineitem; // Attempting to retrieve it from idtoken
-      if (!lineItemId) {
-        const response = await lti.Grade.getLineItems(idtoken, {
-          resourceLinkId: true,
-        });
-        const lineItems = response.lineItems;
-        if (lineItems.length === 0) {
-          // Creating line item if there is none
-          console.log("Creating new line item");
-          const newLineItem = {
-            scoreMaximum: 100,
-            label: "Grade",
-            tag: "grade",
-            resourceLinkId: idtoken.platformContext.resource.id,
-          };
-          const lineItem = await lti.Grade.createLineItem(idtoken, newLineItem);
-          lineItemId = lineItem.id;
-        } else lineItemId = lineItems[0].id;
-      }
-
-      // Sending Grade
-      const responseGrade = await lti.Grade.submitScore(
-        idtoken,
-        lineItemId,
-        gradeObj
-      );
-      return res.send(responseGrade);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).send({ err: err.message });
-    }
+    const response = await ltiService.grade(req, res);
+    return res.status(response.code).send(response.data);
   }
+  
   static async members(req, res) {
-    try {
-      const result = await lti.NamesAndRoles.getMembers(res.locals.token);
-      if (result) return res.send(result.members);
-      return res.sendStatus(500);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).send(err.message);
-    }
+    const response = await ltiService.members(req, res);
+    return res.status(response.code).send(response.data);
   }
+  
   static async deeplink(req, res) {
-    try {
-      const resource = req.body;
-
-      const items = {
-        type: "ltiResourceLink",
-        title: resource.title,
-        url: `https://c2e-player-app-nodejs-stage.curriki.org/play?c2eId=${resource.id}`,
-        custom: {
-          name: resource.name,
-          value: resource.value,
-        },
-      };
-
-      const form = await lti.DeepLinking.createDeepLinkingForm(
-        res.locals.token,
-        items,
-        { message: `Successfully Registered` }
-      );
-      if (form) return res.send(form);
-      return res.sendStatus(500);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).send(err.message);
-    }
+    const response = await ltiService.deeplink(req, res);
+    return res.status(response.code).send(response.data);
   }
+  
   static async play(req, res) {
-    try {
-      const c2eId = req.query.c2eId;
-      const redirectUrl = `https://lti-epub-player-dev.curriki.org/play/${c2eId}`;
-
-      const resp = await axios.get(redirectUrl);
-      return res.send(resp.data);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).send(err.message);
-    }
+    const response = await ltiService.play(req, res);
+    return res.status(response.code).send(response.data);
   }
 
   static async info(req, res) {
-    const token = res.locals.token;
-    const context = res.locals.context;
-
-    return res.send({ token, context });
-
-    const info = {};
-    if (token.userInfo) {
-      if (token.userInfo.name) info.name = token.userInfo.name;
-      if (token.userInfo.email) info.email = token.userInfo.email;
-    }
-
-    if (context.roles) info.roles = context.roles;
-    if (context.context) info.context = context.context;
-
-    info.context.errors = { errors: {} };
-    if (info.context.errors) info.context.errors = [];
-
-    return res.send(info);
+    const response = await ltiService.info(req, res);
+    return res.status(response.code).send(response.data);
   }
 
   static async resources(req, res) {
-    const { page = 1, limit = 10, query = "" } = req.query;
-
-    if (
-      isNaN(parseInt(page)) ||
-      isNaN(parseInt(limit)) ||
-      typeof query !== "string"
-    ) {
-      return res.status(400).send({
-        status: 400,
-        error: "Invalid parameter type",
-        details: {
-          description: "The query params provided are not formatted properly",
-          message: "Invalid parameter type",
-        },
-      });
-    }
-
-    var platformSettings = await PlatformSetting.findOne({
-      where: { lti_client_id: res.locals.token.clientId },
-    });
-    if (!platformSettings) {
-      return res.status(400).send({
-        status: 400,
-        error: "No matching platform settings found",
-        details: {
-          description:
-            "Your LTI authentication information doesn't match any existing platform settings in the C2E player",
-          message: "No matching platform settings found",
-        },
-      });
-    }
-
-    const licensesUrl = `${platformSettings.cee_provider_url}/licenses`;
-    const params = {
-      page,
-      limit: 9000,
-      query,
-      email: platformSettings.cee_licensee_id,
-      secret: platformSettings.cee_secret_key,
-    };
-
-    await axios
-      .get(licensesUrl, { params })
-      .then(async (response) => {
-        return res.send(response.data);
-      })
-      .catch((error) => {
-        res.status(400).send({
-          status: 400,
-          error: "Failed to retrieve licenses",
-          details: {
-            description:
-              "Failed to retrieve licenses. Please check your licensee settings",
-            message: "Failed to retrieve licenses",
-          },
-        });
-      });
+    const response = await ltiService.resources(req, res);
+    return res.status(response.code).send(response.data);
   }
 
   static async stream(req, res) {

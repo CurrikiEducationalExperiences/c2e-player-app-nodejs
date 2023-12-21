@@ -47,21 +47,21 @@ class ltiService {
         lineItemId,
         gradeObj
       );
-      return res.send(responseGrade);
+      return { code: 200, data: responseGrade };
     } catch (err) {
       console.log(err.message);
-      return res.status(500).send({ err: err.message });
+      return {code: 500, data: {err: err.message }};
     }
   }
 
   static async members(req, res) {
     try {
       const result = await lti.NamesAndRoles.getMembers(res.locals.token);
-      if (result) return res.send(result.members);
-      return res.sendStatus(500);
+      if (result) return { code: 200, data: result.members };
+      return { code: 500, data: {} };
     } catch (err) {
       console.log(err.message);
-      return res.status(500).send(err.message);
+      return { code: 500, data: err.message };
     }
   }
 
@@ -84,11 +84,11 @@ class ltiService {
         items,
         { message: `Successfully Registered` }
       );
-      if (form) return res.send(form);
-      return res.sendStatus(500);
+      if (form) return { code: 200, data: form };
+      return { code: 500, data: {} };
     } catch (err) {
       console.log(err.message);
-      return res.status(500).send(err.message);
+      return { code: 500, data: err.message };
     }
   }
 
@@ -98,32 +98,17 @@ class ltiService {
       const redirectUrl = `https://lti-epub-player-dev.curriki.org/play/${c2eId}`;
 
       const resp = await axios.get(redirectUrl);
-      return res.send(resp.data);
+      return { code: 200, data: resp.data };
     } catch (err) {
       console.log(err.message);
-      return res.status(500).send(err.message);
+      return { code: 500, data: err.message };
     }
   }
 
   static async info(req, res) {
     const token = res.locals.token;
     const context = res.locals.context;
-
-    return res.send({ token, context });
-
-    const info = {};
-    if (token.userInfo) {
-      if (token.userInfo.name) info.name = token.userInfo.name;
-      if (token.userInfo.email) info.email = token.userInfo.email;
-    }
-
-    if (context.roles) info.roles = context.roles;
-    if (context.context) info.context = context.context;
-
-    info.context.errors = { errors: {} };
-    if (info.context.errors) info.context.errors = [];
-
-    return res.send(info);
+    return { code: 200, data: { token, context } };
   }
 
   static async resources(req, res) {
@@ -134,36 +119,42 @@ class ltiService {
       isNaN(parseInt(limit)) ||
       typeof query !== "string"
     ) {
-      return res.status(400).send({
-        status: 400,
-        error: "Invalid parameter type",
-        details: {
-          description: "The query params provided are not formatted properly",
-          message: "Invalid parameter type",
+      return {
+        code: 400,
+        data: {
+          status: 400,
+          error: "Invalid parameter type",
+          details: {
+            description: "The query params provided are not formatted properly",
+            message: "Invalid parameter type",
+          },
         },
-      });
+      };
     }
 
-    const platformSettings = await PlatformSetting.findOne({
+    var platformSettings = await PlatformSetting.findOne({
       where: { lti_client_id: res.locals.token.clientId },
     });
     if (!platformSettings) {
-      return res.status(400).send({
-        status: 400,
-        error: "No matching platform settings found",
-        details: {
-          description:
-            "Your LTI authentication information doesn't match any existing platform settings in the C2E player",
-          message: "No matching platform settings found",
+      return {
+        code: 400,
+        data: {
+          status: 400,
+          error: "No matching platform settings found",
+          details: {
+            description:
+              "Your LTI authentication information doesn't match any existing platform settings in the C2E player",
+            message: "No matching platform settings found",
+          },
         },
-      });
+      };
     }
 
     const licensesUrl = `${platformSettings.cee_provider_url}/licenses`;
     const params = {
       page,
-      limit,
-      //query,
+      limit: 9000,
+      query,
       email: platformSettings.cee_licensee_id,
       secret: platformSettings.cee_secret_key,
     };
@@ -171,18 +162,21 @@ class ltiService {
     await axios
       .get(licensesUrl, { params })
       .then(async (response) => {
-        return res.send(response.data);
+        return { code: 200, data: response.data };
       })
       .catch((error) => {
-        res.status(400).send({
-          status: 400,
-          error: "Failed to retrieve licenses",
-          details: {
-            description:
-              "Failed to retrieve licenses. Please check your licensee settings",
-            message: "Failed to retrieve licenses",
+        return {
+          code: 400,
+          data: {
+            status: 400,
+            error: "Failed to retrieve licenses",
+            details: {
+              description:
+                "Failed to retrieve licenses. Please check your licensee settings",
+              message: "Failed to retrieve licenses",
+            },
           },
-        });
+        };
       });
   }
 
