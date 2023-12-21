@@ -50,7 +50,7 @@ class ltiService {
       return { code: 200, data: responseGrade };
     } catch (err) {
       console.log(err.message);
-      return {code: 500, data: {err: err.message }};
+      return { code: 500, data: { err: err.message } };
     }
   }
 
@@ -119,35 +119,29 @@ class ltiService {
       isNaN(parseInt(limit)) ||
       typeof query !== "string"
     ) {
-      return {
-        code: 400,
-        data: {
-          status: 400,
-          error: "Invalid parameter type",
-          details: {
-            description: "The query params provided are not formatted properly",
-            message: "Invalid parameter type",
-          },
+      return res.status(400).send({
+        status: 400,
+        error: "Invalid parameter type",
+        details: {
+          description: "The query params provided are not formatted properly",
+          message: "Invalid parameter type",
         },
-      };
+      });
     }
 
     var platformSettings = await PlatformSetting.findOne({
       where: { lti_client_id: res.locals.token.clientId },
     });
     if (!platformSettings) {
-      return {
-        code: 400,
-        data: {
-          status: 400,
-          error: "No matching platform settings found",
-          details: {
-            description:
-              "Your LTI authentication information doesn't match any existing platform settings in the C2E player",
-            message: "No matching platform settings found",
-          },
+      return res.status(400).send({
+        status: 400,
+        error: "No matching platform settings found",
+        details: {
+          description:
+            "Your LTI authentication information doesn't match any existing platform settings in the C2E player",
+          message: "No matching platform settings found",
         },
-      };
+      });
     }
 
     const licensesUrl = `${platformSettings.cee_provider_url}/licenses`;
@@ -162,21 +156,18 @@ class ltiService {
     await axios
       .get(licensesUrl, { params })
       .then(async (response) => {
-        return { code: 200, data: response.data };
+        return res.send(response.data);
       })
       .catch((error) => {
-        return {
-          code: 400,
-          data: {
-            status: 400,
-            error: "Failed to retrieve licenses",
-            details: {
-              description:
-                "Failed to retrieve licenses. Please check your licensee settings",
-              message: "Failed to retrieve licenses",
-            },
+        res.status(400).send({
+          status: 400,
+          error: "Failed to retrieve licenses",
+          details: {
+            description:
+              "Failed to retrieve licenses. Please check your licensee settings",
+            message: "Failed to retrieve licenses",
           },
-        };
+        });
       });
   }
 
