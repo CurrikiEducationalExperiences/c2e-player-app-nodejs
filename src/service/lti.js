@@ -279,7 +279,8 @@ class ltiService {
       });
   }
 
-  static async registerPlatform(params) {
+  static async registerPlatform(req, res) {
+    const params = req.body;
     if (process.env.ADMIN_SECRET != params.secret)
       return res.status(400).send("Invalid parameters.");
 
