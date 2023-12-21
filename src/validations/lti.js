@@ -15,6 +15,10 @@ module.exports.grade = Joi.object({
   grade: Joi.number().min(0).max(100000000).required(),
 });
 
+module.exports.play = Joi.object({
+  c2eId: Joi.string().max(100000000).required(),
+});
+
 module.exports.deeplink = Joi.object({
   title: Joi.string().max(10000).required(),
   name: Joi.string().max(10000).required(),
