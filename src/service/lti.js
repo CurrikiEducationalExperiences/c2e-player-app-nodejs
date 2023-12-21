@@ -144,7 +144,7 @@ class ltiService {
       });
     }
 
-    var platformSettings = await PlatformSetting.findOne({
+    const platformSettings = await PlatformSetting.findOne({
       where: { lti_client_id: res.locals.token.clientId },
     });
     if (!platformSettings) {
@@ -171,7 +171,7 @@ class ltiService {
     await axios
       .get(licensesUrl, { params })
       .then(async (response) => {
-        return res.status(200).send({data: response});
+        return res.send(response.data);
       })
       .catch((error) => {
         res.status(400).send({
