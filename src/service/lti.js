@@ -171,7 +171,558 @@ class ltiService {
     await axios
       .get(licensesUrl, { params })
       .then(async (response) => {
-        return res.send(response.data);
+        return res.send([
+            {
+                "id": "02411320-98f6-11ee-b38d-15d491e3d304",
+                "title": "Chapter 8: Handling Exceptions",
+                "description": "Chapter 8 of \"Java All-in-One For Dummies, 7th Edition\" explains how Java deals with errors using exception objects and try/catch/finally statements, and outlines various common exceptions.",
+                "licenseemail": "katyisd@curriki.org",
+                "breadcrumb": {
+                    "@id": "c2ens:c2eid-02411320-98f6-11ee-b38d-15d491e3d304/BreadcrumbList",
+                    "@type": "sdons:BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02411320-98f6-11ee-b38d-15d491e3d304/ListItem/Computer-Science",
+                                "name": "Computer Science"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 0
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02411320-98f6-11ee-b38d-15d491e3d304/ListItem/Java®-All-in-One-For-Dummies®7th-Edition",
+                                "name": "Java® All-in-One For Dummies®7th Edition"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 1
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02411320-98f6-11ee-b38d-15d491e3d304/ListItem/Book-2:-Programming-Basics",
+                                "name": "Book 2: Programming Basics"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 2
+                        }
+                    ]
+                },
+                "author": {
+                    "@id": "c2ens:c2eid-02411320-98f6-11ee-b38d-15d491e3d304/author/id/mike@curriki.org",
+                    "url": "",
+                    "name": "Mike Francis",
+                    "@type": "sdons:Person",
+                    "email": "mike@curriki.org"
+                },
+                "metadata": {
+                    "@id": "c2ens:c2eid-02411320-98f6-11ee-b38d-15d491e3d304/metadata/general",
+                    "@type": "sdons:Dataset",
+                    "title": "Chapter 8: Handling Exceptions",
+                    "keywords": [
+                        "Education",
+                        "Curriculum",
+                        "Curriki",
+                        "EPUB"
+                    ],
+                    "description": "Chapter 8 of \"Java All-in-One For Dummies, 7th Edition\" explains how Java deals with errors using exception objects and try/catch/finally statements, and outlines various common exceptions."
+                }
+            },
+            {
+                "id": "02413a30-98f6-11ee-b38d-15d491e3d304",
+                "title": "Chapter 1: Understanding Object-Oriented Programming",
+                "description": "Chapter 1: Understanding Object-Oriented Programming\nThis chapter introduces object-oriented programming, explains objects, classes, inheritance, interfaces, program design with objects, and UML diagramming for Java programming.",
+                "licenseemail": "katyisd@curriki.org",
+                "breadcrumb": {
+                    "@id": "c2ens:c2eid-02413a30-98f6-11ee-b38d-15d491e3d304/BreadcrumbList",
+                    "@type": "sdons:BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02413a30-98f6-11ee-b38d-15d491e3d304/ListItem/Computer-Science",
+                                "name": "Computer Science"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 0
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02413a30-98f6-11ee-b38d-15d491e3d304/ListItem/Java®-All-in-One-For-Dummies®7th-Edition",
+                                "name": "Java® All-in-One For Dummies®7th Edition"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 1
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02413a30-98f6-11ee-b38d-15d491e3d304/ListItem/Book-3:-Object-Oriented-Programming",
+                                "name": "Book 3: Object-Oriented Programming"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 2
+                        }
+                    ]
+                },
+                "author": {
+                    "@id": "c2ens:c2eid-02413a30-98f6-11ee-b38d-15d491e3d304/author/id/mike@curriki.org",
+                    "url": "",
+                    "name": "Mike Francis",
+                    "@type": "sdons:Person",
+                    "email": "mike@curriki.org"
+                },
+                "metadata": {
+                    "@id": "c2ens:c2eid-02413a30-98f6-11ee-b38d-15d491e3d304/metadata/general",
+                    "@type": "sdons:Dataset",
+                    "title": "Chapter 1: Understanding Object-Oriented Programming",
+                    "keywords": [
+                        "Education",
+                        "Curriculum",
+                        "Curriki",
+                        "EPUB"
+                    ],
+                    "description": "Chapter 1: Understanding Object-Oriented Programming\nThis chapter introduces object-oriented programming, explains objects, classes, inheritance, interfaces, program design with objects, and UML diagramming for Java programming."
+                }
+            },
+            {
+                "id": "02418850-98f6-11ee-b38d-15d491e3d304",
+                "title": "Chapter 6: Pulling a Switcheroo",
+                "description": "Chapter 6, \"Pulling a Switcheroo,\" explains the usage of the 'switch' statement for efficient decision-making, instead of complicated 'else-if' chains, in Java programming.",
+                "licenseemail": "katyisd@curriki.org",
+                "breadcrumb": {
+                    "@id": "c2ens:c2eid-02418850-98f6-11ee-b38d-15d491e3d304/BreadcrumbList",
+                    "@type": "sdons:BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02418850-98f6-11ee-b38d-15d491e3d304/ListItem/Computer-Science",
+                                "name": "Computer Science"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 0
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02418850-98f6-11ee-b38d-15d491e3d304/ListItem/Java®-All-in-One-For-Dummies®7th-Edition",
+                                "name": "Java® All-in-One For Dummies®7th Edition"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 1
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02418850-98f6-11ee-b38d-15d491e3d304/ListItem/Book-2:-Programming-Basics",
+                                "name": "Book 2: Programming Basics"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 2
+                        }
+                    ]
+                },
+                "author": {
+                    "@id": "c2ens:c2eid-02418850-98f6-11ee-b38d-15d491e3d304/author/id/mike@curriki.org",
+                    "url": "",
+                    "name": "Mike Francis",
+                    "@type": "sdons:Person",
+                    "email": "mike@curriki.org"
+                },
+                "metadata": {
+                    "@id": "c2ens:c2eid-02418850-98f6-11ee-b38d-15d491e3d304/metadata/general",
+                    "@type": "sdons:Dataset",
+                    "title": "Chapter 6: Pulling a Switcheroo",
+                    "keywords": [
+                        "Education",
+                        "Curriculum",
+                        "Curriki",
+                        "EPUB"
+                    ],
+                    "description": "Chapter 6, \"Pulling a Switcheroo,\" explains the usage of the 'switch' statement for efficient decision-making, instead of complicated 'else-if' chains, in Java programming."
+                }
+            },
+            {
+                "id": "0241af60-98f6-11ee-b38d-15d491e3d304",
+                "title": "Chapter 7: Adding Some Methods to Your Madness",
+                "description": "Chapter 7 discusses creating and using static methods, including methods that return values and accept parameters to improve Java program structure and reusability.",
+                "licenseemail": "katyisd@curriki.org",
+                "breadcrumb": {
+                    "@id": "c2ens:c2eid-0241af60-98f6-11ee-b38d-15d491e3d304/BreadcrumbList",
+                    "@type": "sdons:BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241af60-98f6-11ee-b38d-15d491e3d304/ListItem/Computer-Science",
+                                "name": "Computer Science"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 0
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241af60-98f6-11ee-b38d-15d491e3d304/ListItem/Java®-All-in-One-For-Dummies®7th-Edition",
+                                "name": "Java® All-in-One For Dummies®7th Edition"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 1
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241af60-98f6-11ee-b38d-15d491e3d304/ListItem/Book-2:-Programming-Basics",
+                                "name": "Book 2: Programming Basics"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 2
+                        }
+                    ]
+                },
+                "author": {
+                    "@id": "c2ens:c2eid-0241af60-98f6-11ee-b38d-15d491e3d304/author/id/mike@curriki.org",
+                    "url": "",
+                    "name": "Mike Francis",
+                    "@type": "sdons:Person",
+                    "email": "mike@curriki.org"
+                },
+                "metadata": {
+                    "@id": "c2ens:c2eid-0241af60-98f6-11ee-b38d-15d491e3d304/metadata/general",
+                    "@type": "sdons:Dataset",
+                    "title": "Chapter 7: Adding Some Methods to Your Madness",
+                    "keywords": [
+                        "Education",
+                        "Curriculum",
+                        "Curriki",
+                        "EPUB"
+                    ],
+                    "description": "Chapter 7 discusses creating and using static methods, including methods that return values and accept parameters to improve Java program structure and reusability."
+                }
+            },
+            {
+                "id": "0241af61-98f6-11ee-b38d-15d491e3d304",
+                "title": "Chapter 2: Making Your Own Classes",
+                "description": "Chapter 2, \"Making Your Own Classes,\" covers the fundamentals of defining custom classes in Java, including declaring a class, creating constructors, adding methods, utilizing the 'this' keyword, and introducing the 'record' feature.",
+                "licenseemail": "katyisd@curriki.org",
+                "breadcrumb": {
+                    "@id": "c2ens:c2eid-0241af61-98f6-11ee-b38d-15d491e3d304/BreadcrumbList",
+                    "@type": "sdons:BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241af61-98f6-11ee-b38d-15d491e3d304/ListItem/Computer-Science",
+                                "name": "Computer Science"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 0
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241af61-98f6-11ee-b38d-15d491e3d304/ListItem/Java®-All-in-One-For-Dummies®7th-Edition",
+                                "name": "Java® All-in-One For Dummies®7th Edition"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 1
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241af61-98f6-11ee-b38d-15d491e3d304/ListItem/Book-3:-Object-Oriented-Programming",
+                                "name": "Book 3: Object-Oriented Programming"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 2
+                        }
+                    ]
+                },
+                "author": {
+                    "@id": "c2ens:c2eid-0241af61-98f6-11ee-b38d-15d491e3d304/author/id/mike@curriki.org",
+                    "url": "",
+                    "name": "Mike Francis",
+                    "@type": "sdons:Person",
+                    "email": "mike@curriki.org"
+                },
+                "metadata": {
+                    "@id": "c2ens:c2eid-0241af61-98f6-11ee-b38d-15d491e3d304/metadata/general",
+                    "@type": "sdons:Dataset",
+                    "title": "Chapter 2: Making Your Own Classes",
+                    "keywords": [
+                        "Education",
+                        "Curriculum",
+                        "Curriki",
+                        "EPUB"
+                    ],
+                    "description": "Chapter 2, \"Making Your Own Classes,\" covers the fundamentals of defining custom classes in Java, including declaring a class, creating constructors, adding methods, utilizing the 'this' keyword, and introducing the 'record' feature."
+                }
+            },
+            {
+                "id": "0241d670-98f6-11ee-b38d-15d491e3d304",
+                "title": "Chapter 5: Going Around in Circles (or, Using Loops)",
+                "description": "Chapter 5 explains loops in Java, including while loops, their syntax, conditional expressions, and the use of braces for statement blocks within loops.",
+                "licenseemail": "katyisd@curriki.org",
+                "breadcrumb": {
+                    "@id": "c2ens:c2eid-0241d670-98f6-11ee-b38d-15d491e3d304/BreadcrumbList",
+                    "@type": "sdons:BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241d670-98f6-11ee-b38d-15d491e3d304/ListItem/Computer-Science",
+                                "name": "Computer Science"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 0
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241d670-98f6-11ee-b38d-15d491e3d304/ListItem/Java®-All-in-One-For-Dummies®7th-Edition",
+                                "name": "Java® All-in-One For Dummies®7th Edition"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 1
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241d670-98f6-11ee-b38d-15d491e3d304/ListItem/Book-2:-Programming-Basics",
+                                "name": "Book 2: Programming Basics"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 2
+                        }
+                    ]
+                },
+                "author": {
+                    "@id": "c2ens:c2eid-0241d670-98f6-11ee-b38d-15d491e3d304/author/id/mike@curriki.org",
+                    "url": "",
+                    "name": "Mike Francis",
+                    "@type": "sdons:Person",
+                    "email": "mike@curriki.org"
+                },
+                "metadata": {
+                    "@id": "c2ens:c2eid-0241d670-98f6-11ee-b38d-15d491e3d304/metadata/general",
+                    "@type": "sdons:Dataset",
+                    "title": "Chapter 5: Going Around in Circles (or, Using Loops)",
+                    "keywords": [
+                        "Education",
+                        "Curriculum",
+                        "Curriki",
+                        "EPUB"
+                    ],
+                    "description": "Chapter 5 explains loops in Java, including while loops, their syntax, conditional expressions, and the use of braces for statement blocks within loops."
+                }
+            },
+            {
+                "id": "0241fd80-98f6-11ee-b38d-15d491e3d304",
+                "title": "Chapter 4: Making Choices",
+                "description": "Chapter 4, \"Making Choices,\" discusses how to write Java code that makes decisions using Boolean expressions, if statements, switch statements, and logical operators. It covers simple and complex conditions and comparisons.",
+                "licenseemail": "katyisd@curriki.org",
+                "breadcrumb": {
+                    "@id": "c2ens:c2eid-0241fd80-98f6-11ee-b38d-15d491e3d304/BreadcrumbList",
+                    "@type": "sdons:BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241fd80-98f6-11ee-b38d-15d491e3d304/ListItem/Computer-Science",
+                                "name": "Computer Science"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 0
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241fd80-98f6-11ee-b38d-15d491e3d304/ListItem/Java®-All-in-One-For-Dummies®7th-Edition",
+                                "name": "Java® All-in-One For Dummies®7th Edition"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 1
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241fd80-98f6-11ee-b38d-15d491e3d304/ListItem/Book-2:-Programming-Basics",
+                                "name": "Book 2: Programming Basics"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 2
+                        }
+                    ]
+                },
+                "author": {
+                    "@id": "c2ens:c2eid-0241fd80-98f6-11ee-b38d-15d491e3d304/author/id/mike@curriki.org",
+                    "url": "",
+                    "name": "Mike Francis",
+                    "@type": "sdons:Person",
+                    "email": "mike@curriki.org"
+                },
+                "metadata": {
+                    "@id": "c2ens:c2eid-0241fd80-98f6-11ee-b38d-15d491e3d304/metadata/general",
+                    "@type": "sdons:Dataset",
+                    "title": "Chapter 4: Making Choices",
+                    "keywords": [
+                        "Education",
+                        "Curriculum",
+                        "Curriki",
+                        "EPUB"
+                    ],
+                    "description": "Chapter 4, \"Making Choices,\" discusses how to write Java code that makes decisions using Boolean expressions, if statements, switch statements, and logical operators. It covers simple and complex conditions and comparisons."
+                }
+            },
+            {
+                "id": "0241fd81-98f6-11ee-b38d-15d491e3d304",
+                "title": "Chapter 20: Knowing the Knee and the Leg",
+                "description": "Chapter 20 provides an overview of the anatomy of the knee joint and leg, including muscles, bones, ligaments, and their functions within human locomotion.",
+                "licenseemail": "katyisd@curriki.org",
+                "breadcrumb": {
+                    "@id": "c2ens:c2eid-0241fd81-98f6-11ee-b38d-15d491e3d304/BreadcrumbList",
+                    "@type": "sdons:BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241fd81-98f6-11ee-b38d-15d491e3d304/ListItem/Health-Science",
+                                "name": "Health Science"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 0
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241fd81-98f6-11ee-b38d-15d491e3d304/ListItem/Clinical-Anatomy-For-Dummies",
+                                "name": "Clinical Anatomy For Dummies"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 1
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-0241fd81-98f6-11ee-b38d-15d491e3d304/ListItem/\tPart-IV:-\tMoving-to-the-Upper-and-Lower-Extremities",
+                                "name": "\tPart IV: \tMoving to the Upper and Lower Extremities"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 2
+                        }
+                    ]
+                },
+                "author": {
+                    "@id": "c2ens:c2eid-0241fd81-98f6-11ee-b38d-15d491e3d304/author/id/mike@curriki.org",
+                    "url": "",
+                    "name": "Mike Francis",
+                    "@type": "sdons:Person",
+                    "email": "mike@curriki.org"
+                },
+                "metadata": {
+                    "@id": "c2ens:c2eid-0241fd81-98f6-11ee-b38d-15d491e3d304/metadata/general",
+                    "@type": "sdons:Dataset",
+                    "title": "Chapter 20: Knowing the Knee and the Leg",
+                    "keywords": [
+                        "Education",
+                        "Curriculum",
+                        "Curriki",
+                        "EPUB"
+                    ],
+                    "description": "Chapter 20 provides an overview of the anatomy of the knee joint and leg, including muscles, bones, ligaments, and their functions within human locomotion."
+                }
+            },
+            {
+                "id": "02422490-98f6-11ee-b38d-15d491e3d304",
+                "title": "Chapter 21: Finding the Ankle and the Foot",
+                "description": "Chapter 21 covers the anatomical structures, muscles, bones, joints, and functions of the ankle and foot, including common injuries and clinical considerations.",
+                "licenseemail": "katyisd@curriki.org",
+                "breadcrumb": {
+                    "@id": "c2ens:c2eid-02422490-98f6-11ee-b38d-15d491e3d304/BreadcrumbList",
+                    "@type": "sdons:BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02422490-98f6-11ee-b38d-15d491e3d304/ListItem/Health-Science",
+                                "name": "Health Science"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 0
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02422490-98f6-11ee-b38d-15d491e3d304/ListItem/Clinical-Anatomy-For-Dummies",
+                                "name": "Clinical Anatomy For Dummies"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 1
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02422490-98f6-11ee-b38d-15d491e3d304/ListItem/\tPart-IV:-\tMoving-to-the-Upper-and-Lower-Extremities",
+                                "name": "\tPart IV: \tMoving to the Upper and Lower Extremities"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 2
+                        }
+                    ]
+                },
+                "author": {
+                    "@id": "c2ens:c2eid-02422490-98f6-11ee-b38d-15d491e3d304/author/id/mike@curriki.org",
+                    "url": "",
+                    "name": "Mike Francis",
+                    "@type": "sdons:Person",
+                    "email": "mike@curriki.org"
+                },
+                "metadata": {
+                    "@id": "c2ens:c2eid-02422490-98f6-11ee-b38d-15d491e3d304/metadata/general",
+                    "@type": "sdons:Dataset",
+                    "title": "Chapter 21: Finding the Ankle and the Foot",
+                    "keywords": [
+                        "Education",
+                        "Curriculum",
+                        "Curriki",
+                        "EPUB"
+                    ],
+                    "description": "Chapter 21 covers the anatomical structures, muscles, bones, joints, and functions of the ankle and foot, including common injuries and clinical considerations."
+                }
+            },
+            {
+                "id": "02422491-98f6-11ee-b38d-15d491e3d304",
+                "title": "Chapter 4: Using Subclasses and Inheritance",
+                "description": "Chapter 4 explains Java inheritance, covering the creation of subclasses, using `protected`, implementing polymorphism, overriding methods, and creating custom exception classes. It discusses parent-child class relationships in Java.",
+                "licenseemail": "katyisd@curriki.org",
+                "breadcrumb": {
+                    "@id": "c2ens:c2eid-02422491-98f6-11ee-b38d-15d491e3d304/BreadcrumbList",
+                    "@type": "sdons:BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02422491-98f6-11ee-b38d-15d491e3d304/ListItem/Computer-Science",
+                                "name": "Computer Science"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 0
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02422491-98f6-11ee-b38d-15d491e3d304/ListItem/Java®-All-in-One-For-Dummies®7th-Edition",
+                                "name": "Java® All-in-One For Dummies®7th Edition"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 1
+                        },
+                        {
+                            "item": {
+                                "@id": "c2ens:c2eid-02422491-98f6-11ee-b38d-15d491e3d304/ListItem/Book-3:-Object-Oriented-Programming",
+                                "name": "Book 3: Object-Oriented Programming"
+                            },
+                            "@type": "sdons:ListItem",
+                            "position": 2
+                        }
+                    ]
+                },
+                "author": {
+                    "@id": "c2ens:c2eid-02422491-98f6-11ee-b38d-15d491e3d304/author/id/mike@curriki.org",
+                    "url": "",
+                    "name": "Mike Francis",
+                    "@type": "sdons:Person",
+                    "email": "mike@curriki.org"
+                },
+                "metadata": {
+                    "@id": "c2ens:c2eid-02422491-98f6-11ee-b38d-15d491e3d304/metadata/general",
+                    "@type": "sdons:Dataset",
+                    "title": "Chapter 4: Using Subclasses and Inheritance",
+                    "keywords": [
+                        "Education",
+                        "Curriculum",
+                        "Curriki",
+                        "EPUB"
+                    ],
+                    "description": "Chapter 4 explains Java inheritance, covering the creation of subclasses, using `protected`, implementing polymorphism, overriding methods, and creating custom exception classes. It discusses parent-child class relationships in Java."
+                }
+            }
+        ]);
       })
       .catch((error) => {
         res.status(400).send({
