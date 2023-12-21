@@ -163,7 +163,7 @@ class ltiService {
     const params = {
       page,
       limit: 9000,
-      query,
+      //query,
       email: platformSettings.cee_licensee_id,
       secret: platformSettings.cee_secret_key,
     };
@@ -171,7 +171,7 @@ class ltiService {
     await axios
       .get(licensesUrl, { params })
       .then(async (response) => {
-        return res.send({param: params, url: licensesUrl});
+        return res.send(response.data);
       })
       .catch((error) => {
         res.status(400).send({
