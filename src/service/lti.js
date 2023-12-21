@@ -171,7 +171,7 @@ class ltiService {
     await axios
       .get(licensesUrl, { params })
       .then(async (response) => {
-        return res.status(200).send({data: "response.data"});
+        return res.status(200).send({data: response});
       })
       .catch((error) => {
         res.status(400).send({
