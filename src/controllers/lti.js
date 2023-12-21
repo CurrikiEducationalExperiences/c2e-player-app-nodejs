@@ -288,7 +288,7 @@ class ltiController {
 
   static async registerPlatform(req, res) {
     try {
-      await ltiService.registerPlatform(req.body);
+      const result = await ltiService.registerPlatform(req.body);
       if (!result) return res.status(400).send("Invalid parameters.");
       return res.status(200).send("Platform registered successfully.");
     } catch (err) {
