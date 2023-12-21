@@ -47,21 +47,21 @@ class ltiService {
         lineItemId,
         gradeObj
       );
-      return { code: 200, data: responseGrade };
+      return res.send(responseGrade);
     } catch (err) {
       console.log(err.message);
-      return { code: 500, data: { err: err.message } };
+      return res.status(500).send({ err: err.message });
     }
   }
 
   static async members(req, res) {
     try {
       const result = await lti.NamesAndRoles.getMembers(res.locals.token);
-      if (result) return { code: 200, data: result.members };
-      return { code: 500, data: {} };
+      if (result) return res.send(result.members);
+      return res.sendStatus(500);
     } catch (err) {
       console.log(err.message);
-      return { code: 500, data: err.message };
+      return res.status(500).send(err.message);
     }
   }
 
@@ -84,11 +84,11 @@ class ltiService {
         items,
         { message: `Successfully Registered` }
       );
-      if (form) return { code: 200, data: form };
-      return { code: 500, data: {} };
+      if (form) return res.send(form);
+      return res.sendStatus(500);
     } catch (err) {
       console.log(err.message);
-      return { code: 500, data: err.message };
+      return res.status(500).send(err.message);
     }
   }
 
@@ -98,17 +98,17 @@ class ltiService {
       const redirectUrl = `https://lti-epub-player-dev.curriki.org/play/${c2eId}`;
 
       const resp = await axios.get(redirectUrl);
-      return { code: 200, data: resp.data };
+      return res.send(resp.data);
     } catch (err) {
       console.log(err.message);
-      return { code: 500, data: err.message };
+      return res.status(500).send(err.message);
     }
   }
 
   static async info(req, res) {
     const token = res.locals.token;
     const context = res.locals.context;
-    return { code: 200, data: { token, context } };
+    return res.send({ token, context });
   }
 
   static async resources(req, res) {
@@ -226,15 +226,40 @@ class ltiService {
   }
 
   static async xapi(req, res) {
-    if (!req.body.id || !req.body.verb)
-      return res.status(400).send("No xAPI statement provided.");
+    var platformSettings = await PlatformSetting.findOne({
+      where: { lti_client_id: res.locals.token.clientId },
+    });
+    if (!platformSettings) {
+      return res.status(400).send({
+        status: 400,
+        error: "No matching platform settings found",
+        details: {
+          description:
+            "Your LTI authentication information doesn't match any existing platform settings in the C2E player",
+          message: "No matching platform settings found",
+        },
+      });
+    }
+
+    if (!req.body.id || !req.body.verb) {
+      return res.status(400).send({
+        status: 400,
+        error: "No xAPI statement provided",
+        details: {
+          description:
+            "The request params provided do not match a valid xAPI statement format",
+          message: "No xAPI statement provided",
+        },
+      });
+    }
 
     const params = {
       statement: JSON.stringify(req.body),
-      email: apiUser,
-      secret: apiSecret,
+      email: platformSettings.cee_licensee_id,
+      secret: platformSettings.cee_secret_key,
     };
 
+    const xapiServiceUrl = `${platformSettings.cee_provider_url}/xapi`;
     await axios
       .post(xapiServiceUrl, params)
       .then(async (response) => {
@@ -242,14 +267,21 @@ class ltiService {
       })
       .catch((error) => {
         console.log(error);
-        res.send({
-          error: "Error: Failed to send  xAPI statement to service provider",
+        return res.status(400).send({
+          status: 400,
+          error: "Failed to send  xAPI statement to service provider",
+          details: {
+            description:
+              "Failed to send  xAPI statement to service provider. Check your integration settings",
+            message: "Failed to send  xAPI statement to service provider",
+          },
         });
       });
   }
 
   static async registerPlatform(params) {
-    if (process.env.ADMIN_SECRET != params.secret) return false;
+    if (process.env.ADMIN_SECRET != params.secret)
+      return res.status(400).send("Invalid parameters.");
 
     await lti.registerPlatform({
       url: params.url,
@@ -262,7 +294,7 @@ class ltiService {
         key: params.authConfigKey,
       },
     });
-    return true;
+    return res.status(200).send("Platform registered successfully.");
   }
 }
 module.exports = { ltiService };
