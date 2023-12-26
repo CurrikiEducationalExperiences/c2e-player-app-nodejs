@@ -25,6 +25,9 @@ describe("service/users", () => {
     User.findOne.mockReset();
     nock.cleanAll();
   });
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
   describe("register()", () => {
     const registerationDetails = {

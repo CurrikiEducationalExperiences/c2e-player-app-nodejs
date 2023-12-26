@@ -5,14 +5,44 @@ const validationMiddleware = require("../middleware/validation");
 const ltiValidations = require("../validations/lti");
 const { ltiController } = require("../controllers/lti");
 
-ltiRouter.post("/grade", ltiController.grade);
-ltiRouter.get("/members", ltiController.members);
-ltiRouter.post("/deeplink", ltiController.deeplink);
-ltiRouter.post("/play", ltiController.play);
-ltiRouter.get("/info", ltiController.info);
-ltiRouter.get("/resources", ltiController.resources);
-ltiRouter.get("/stream", ltiController.stream);
-ltiRouter.get("/xapi/statements", ltiController.xapi);
+ltiRouter.post(
+  "/grade",
+  validationMiddleware(ltiValidations.grade),
+  ltiController.grade
+);
+ltiRouter.get(
+  "/members",
+  ltiController.members
+);
+ltiRouter.post(
+  "/deeplink",
+  validationMiddleware(ltiValidations.deeplink),
+  ltiController.deeplink
+);
+ltiRouter.post(
+  "/play",
+  validationMiddleware(ltiValidations.play, (isGet = true)),
+  ltiController.play
+);
+ltiRouter.get(
+  "/info",
+  ltiController.info
+);
+ltiRouter.get(
+  "/resources",
+  validationMiddleware(ltiValidations.resources, (isGet = true)),
+  ltiController.resources
+);
+ltiRouter.get(
+  "/stream",
+  validationMiddleware(ltiValidations.stream, (isGet = true)),
+  ltiController.stream
+);
+ltiRouter.get(
+  "/xapi/statements",
+  validationMiddleware(ltiValidations.xapi),
+  ltiController.xapi
+);
 ltiRouter.post(
   "/platform/register",
   validationMiddleware(ltiValidations.registerPlatform),

@@ -4,14 +4,13 @@
     "version": "1.0.0",
     "title": "C2E-PLAYER-APP-NODEJS"
   },
-  "basePath": "/api/v1/",
   "schemes": ["http"],
   "paths": {
-    "/users/register": {
+    "/api/v1/users/register": {
       "post": {
         "x-swagger-router-controller": "users",
         "operationId": "user-register",
-        "tags": ["User"],
+        "tags": ["Admin Routes"],
         "summary": "Account Registration Endpoint",
         "parameters": [
           {
@@ -23,15 +22,15 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Mehmood Hussain"
+                  "example": "Jhon Doe"
                 },
                 "phone": {
                   "type": "string",
-                  "example": "+923000628070"
+                  "example": "+000000000000"
                 },
                 "email": {
                   "type": "string",
-                  "example": "mehmoodce@gmail.com"
+                  "example": "jhondoe@curriki.com"
                 },
                 "password": {
                   "type": "string",
@@ -65,11 +64,11 @@
         }
       }
     },
-    "/users/login": {
+    "/api/v1/users/login": {
       "post": {
         "x-swagger-router-controller": "users",
         "operationId": "user-login",
-        "tags": ["User"],
+        "tags": ["Admin Routes"],
         "summary": "Account Signin Endpoint",
         "parameters": [
           {
@@ -81,7 +80,7 @@
               "properties": {
                 "email": {
                   "type": "string",
-                  "example": "mehmoodce@gmail.com"
+                  "example": "jhondoe@curriki.com"
                 },
                 "password": {
                   "type": "string",
@@ -107,21 +106,27 @@
                 },
                 "result": {
                   "type": "string",
-                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoibWVobW9vZC5odXNzYWluQHRreGVsLmNvbSIsImlhdCI6MTcwMjM3NzQ0MiwiZXhwIjoxNzAyNDYzODQyfQ.bFyvfascg7Xmvi2-RTwDaXegKMh226WQ7aPsGE40wx4"
+                  "example": "some JWT Token"
                 }
               }
             }
-          }
-        },
-        "respons": {
-          "200": {
-            "description": "api status",
+          },
+          "400": {
+            "description": "Response Format",
             "schema": {
               "type": "object",
               "properties": {
-                "status": {
+                "code": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
                   "type": "string",
-                  "description": "api status"
+                  "example": "Invalid email or password provided!"
+                },
+                "result": {
+                  "type": null,
+                  "example": null
                 }
               }
             }
@@ -129,11 +134,11 @@
         }
       }
     },
-    "/users/getProfile": {
+    "/api/v1/users/getProfile": {
       "get": {
         "x-swagger-router-controller": "users",
         "operationId": "View Profile",
-        "tags": ["User"],
+        "tags": ["Admin Routes"],
         "summary": "Get Profile",
         "parameters": [
           {
@@ -163,9 +168,9 @@
                   "type": "object",
                   "example": {
                     "id": 1,
-                    "name": "Mehmood Hussain",
-                    "email": "mehmood.hussain@tkxel.com",
-                    "phone": "+92300000000",
+                    "name": "Jhon Doe",
+                    "email": "jhondoe@curriki.com",
+                    "phone": "+00000000000",
                     "createdAt": "2023-12-12T10:23:55.242Z",
                     "updatedAt": "2023-12-12T11:09:37.077Z"
                   }
@@ -173,16 +178,762 @@
               }
             }
           }
-        },
-        "respons": {
-          "200": {
-            "description": "api status",
+        }
+      }
+    },
+    "/api/v1/users/update": {
+      "patch": {
+        "x-swagger-router-controller": "users",
+        "operationId": "Update Profile",
+        "tags": ["Admin Routes"],
+        "summary": "Update Profile",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "User credentials",
             "schema": {
               "type": "object",
               "properties": {
-                "status": {
+                "phone": {
                   "type": "string",
-                  "description": "api status"
+                  "example": "0000000000001"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "result": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/delete/{id}": {
+      "delete": {
+        "x-swagger-router-controller": "users",
+        "operationId": "Delete Profile",
+        "tags": ["Admin Routes"],
+        "summary": "Delete Profile",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the user to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "result": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Cannot delete logged user!"
+                },
+                "result": {
+                  "type": null,
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deeplink": {
+      "post": {
+        "x-swagger-router-controller": "deeplink",
+        "operationId": "deeplink",
+        "tags": ["LTI Routes"],
+        "summary": "Deeplink Endpoint",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "Deeplink params",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": ""
+                },
+                "name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "value": {
+                  "type": "string",
+                  "example": ""
+                },
+                "id": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "text/html": {
+                "example": "<!DOCTYPE html><html><head><title>HTML Form</title></head><body><form action='/submit' method='post'><label for='inputField'>Input Field:</label><input type='text' id='inputField' name='inputField'><br><input type='submit' value='Submit'></form></body></html>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/play/:c2eId": {
+      "post": {
+        "x-swagger-router-controller": "play",
+        "operationId": "play",
+        "tags": ["LTI Routes"],
+        "summary": "Play Endpoint",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          },
+          {
+            "name": "c2eId",
+            "in": "query",
+            "description": "c2eId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "abc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "text/html": {
+                "example": "<!DOCTYPE html><html><head><title>HTML Form</title></head><body><form action='/submit' method='post'><label for='inputField'>Input Field:</label><input type='text' id='inputField' name='inputField'><br><input type='submit' value='Submit'></form></body></html>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/register": {
+      "post": {
+        "x-swagger-router-controller": "Platform Registration",
+        "operationId": "Platform Registration",
+        "tags": ["LTI Routes"],
+        "summary": "Platform Registration Endpoint",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "Platform details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "clientId": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "authenticationEndpoint": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "accesstokenEndpoint": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "authConfigMethod": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "authConfigKey": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "secret": {
+                  "type": "string",
+                  "example": "Some string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "string",
+              "example": "Platform registered successfully."
+            }
+          }
+        }
+      }
+    },
+    "/members": {
+      "get": {
+        "x-swagger-router-controller": "members",
+        "operationId": "members",
+        "tags": ["LTI Routes"],
+        "summary": "Get Members Details Endpoint",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "array",
+              "example": [
+                {
+                  "status": "Active",
+                  "name": "Jhon Doe",
+                  "picture": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "given_name": "Jhon",
+                  "family_name": "Doe",
+                  "email": "jhondoe@curriki.org",
+                  "user_id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "lti11_legacy_user_id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "roles": [
+                    "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/info": {
+      "get": {
+        "x-swagger-router-controller": "members",
+        "operationId": "members",
+        "tags": ["LTI Routes"],
+        "summary": "Get Members Details Endpoint",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "example": {
+                "token": {
+                  "id": 1,
+                  "iss": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "platformId": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "clientId": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "deploymentId": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "user": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "userInfo": {
+                    "given_name": "Jhon",
+                    "family_name": "Doe",
+                    "name": "Jhon Doe",
+                    "email": "jhondoe@curriki.org"
+                  },
+                  "platformInfo": {
+                    "guid": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "name": "Curriki",
+                    "version": "cloud",
+                    "product_family_code": "canvas",
+                    "validation_context": null,
+                    "errors": {
+                      "errors": {}
+                    }
+                  },
+                  "createdAt": "2023-12-26T06:58:55.147Z",
+                  "updatedAt": "2023-12-26T06:58:55.147Z",
+                  "platformContext": {
+                    "id": 1,
+                    "contextId": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "path": "/deeplink",
+                    "user": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "roles": [
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                    ],
+                    "targetLinkUri": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "context": {
+                      "id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "label": "audio-recorder",
+                      "title": "Audio Recorder",
+                      "type": [
+                        "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                      ],
+                      "validation_context": null,
+                      "errors": {
+                        "errors": {}
+                      }
+                    },
+                    "resource": null,
+                    "custom": {},
+                    "endpoint": {
+                      "scope": [
+                        "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                        "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                        "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                        "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                      ],
+                      "lineitems": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "validation_context": null,
+                      "errors": {
+                        "errors": {}
+                      }
+                    },
+                    "namesRoles": {
+                      "context_memberships_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "service_versions": ["2.0"],
+                      "validation_context": null,
+                      "errors": {
+                        "errors": {}
+                      }
+                    },
+                    "lis": {
+                      "person_sourcedid": null,
+                      "course_offering_sourcedid": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "validation_context": null,
+                      "errors": {
+                        "errors": {}
+                      }
+                    },
+                    "launchPresentation": {
+                      "document_target": "iframe",
+                      "return_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "locale": "en",
+                      "height": 400,
+                      "width": 800,
+                      "validation_context": null,
+                      "errors": {
+                        "errors": {}
+                      }
+                    },
+                    "messageType": "LtiDeepLinkingRequest",
+                    "version": "1.3.0",
+                    "deepLinkingSettings": {
+                      "deep_link_return_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "accept_types": ["ltiResourceLink"],
+                      "accept_presentation_document_targets": [
+                        "iframe",
+                        "window"
+                      ],
+                      "accept_media_types": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "auto_create": false,
+                      "accept_multiple": false,
+                      "validation_context": null,
+                      "errors": {
+                        "errors": {}
+                      }
+                    },
+                    "createdAt": "2023-12-26T06:58:55.154Z",
+                    "updatedAt": "2023-12-26T06:58:55.881Z"
+                  }
+                },
+                "context": {
+                  "id": 121,
+                  "contextId": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "path": "/deeplink",
+                  "user": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "roles": [
+                    "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                  ],
+                  "targetLinkUri": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "context": {
+                    "id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "label": "audio-recorder",
+                    "title": "Audio Recorder",
+                    "type": [
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                    ],
+                    "validation_context": null,
+                    "errors": {
+                      "errors": {}
+                    }
+                  },
+                  "resource": null,
+                  "custom": {},
+                  "endpoint": {
+                    "scope": [
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                    ],
+                    "lineitems": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "validation_context": null,
+                    "errors": {
+                      "errors": {}
+                    }
+                  },
+                  "namesRoles": {
+                    "context_memberships_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "service_versions": ["2.0"],
+                    "validation_context": null,
+                    "errors": {
+                      "errors": {}
+                    }
+                  },
+                  "lis": {
+                    "person_sourcedid": null,
+                    "course_offering_sourcedid": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "validation_context": null,
+                    "errors": {
+                      "errors": {}
+                    }
+                  },
+                  "launchPresentation": {
+                    "document_target": "iframe",
+                    "return_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "locale": "en",
+                    "height": 400,
+                    "width": 800,
+                    "validation_context": null,
+                    "errors": {
+                      "errors": {}
+                    }
+                  },
+                  "messageType": "LtiDeepLinkingRequest",
+                  "version": "1.3.0",
+                  "deepLinkingSettings": {
+                    "deep_link_return_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "accept_types": ["ltiResourceLink"],
+                    "accept_presentation_document_targets": [
+                      "iframe",
+                      "window"
+                    ],
+                    "accept_media_types": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                    "auto_create": false,
+                    "accept_multiple": false,
+                    "validation_context": null,
+                    "errors": {
+                      "errors": {}
+                    }
+                  },
+                  "createdAt": "2023-12-26T06:58:55.154Z",
+                  "updatedAt": "2023-12-26T06:58:55.881Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resources/:page/:limit": {
+      "get": {
+        "x-swagger-router-controller": "members",
+        "operationId": "members",
+        "tags": ["LTI Routes"],
+        "summary": "Get Members Details Endpoint",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "10"
+            }
+          }
+        ],
+        "responses": {
+          "responses": {
+            "200": {
+              "description": "Response Format",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "array",
+                    "example": [
+                      {
+                        "id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                        "title": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                        "description": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                        "licenseemail": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                        "breadcrumb": {
+                          "@id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                          "@type": "sdons:BreadcrumbList",
+                          "itemListElement": [
+                            {
+                              "item": {
+                                "@id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                                "name": "Computer Science"
+                              },
+                              "@type": "sdons:ListItem",
+                              "position": 0
+                            },
+                            {
+                              "item": {
+                                "@id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                                "name": "Java® All-in-One For Dummies®7th Edition"
+                              },
+                              "@type": "sdons:ListItem",
+                              "position": 1
+                            },
+                            {
+                              "item": {
+                                "@id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                                "name": "Book 2: Programming Basics"
+                              },
+                              "@type": "sdons:ListItem",
+                              "position": 2
+                            }
+                          ]
+                        },
+                        "author": {
+                          "@id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                          "url": "",
+                          "name": "Mike Francis",
+                          "@type": "sdons:Person",
+                          "email": "mike@curriki.org"
+                        },
+                        "metadata": {
+                          "@id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                          "@type": "sdons:Dataset",
+                          "title": "Chapter 8: Handling Exceptions",
+                          "keywords": [
+                            "Education",
+                            "Curriculum",
+                            "Curriki",
+                            "EPUB"
+                          ],
+                          "description": "Chapter 8 of \"Java All-in-One For Dummies, 7th Edition\" explains how Java deals with errors using exception objects and try/catch/finally statements, and outlines various common exceptions."
+                        }
+                      }
+                    ]
+                  },
+                  "count": {
+                    "type": "object",
+                    "example": { "count": 1 }
+                  },
+                  "page": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "example": 10
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stream/:ceeId": {
+      "get": {
+        "x-swagger-router-controller": "members",
+        "operationId": "members",
+        "tags": ["LTI Routes"],
+        "summary": "Get Members Details Endpoint",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          },
+          {
+            "name": "ceeId",
+            "in": "query",
+            "description": "ceeId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "abc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "text",
+              "example": "some decoded text of a stream"
+            }
+          }
+        }
+      }
+    },
+    "/xapi/statements": {
+      "get": {
+        "x-swagger-router-controller": "members",
+        "operationId": "members",
+        "tags": ["LTI Routes"],
+        "summary": "Get Members Details Endpoint",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "Xapi Statement details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "verb": {
+                  "type": "object",
+                  "example": {
+                    "id": "xxxxxxxxxx",
+                    "display": {
+                      "en-US": "consumed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "ok"
                 }
               }
             }

@@ -76,6 +76,10 @@ lti.whitelist(new RegExp(/^\/api\/v1/), {
   route: new RegExp(/^api\/v1/),
   method: "delete",
 });
+lti.whitelist(new RegExp(/^\/api-docs/), {
+  route: new RegExp(/^api\/v1/),
+  method: "get",
+});
 lti.whitelist({ route: "/platform/register", method: "post" });
 
 /////////////////// BODY PARSER ///////////////////

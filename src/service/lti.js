@@ -1,6 +1,8 @@
 const axios = require("axios");
 const lti = require("ltijs").Provider;
 const { PlatformSetting } = require("../../models/platformSetting");
+const ERROR_CODES = require("../constant/error-messages");
+const SUCCESS_CODES = require("../constant/success-messages");
 class ltiService {
   static async grade(req, res) {
     try {
@@ -67,7 +69,7 @@ class ltiService {
       const items = {
         type: "ltiResourceLink",
         title: resource.title,
-        url: `https://c2e-player-app-nodejs-stage.curriki.org/play?c2eId=${resource.id}`,
+        url: `${process.env.NODE_APP_BASEURL}play?c2eId=${resource.id}`,
         custom: {
           name: resource.name,
           value: resource.value,
@@ -90,7 +92,7 @@ class ltiService {
   static async play(req, res) {
     try {
       const c2eId = req.query.c2eId;
-      const redirectUrl = `https://lti-epub-player-dev.curriki.org/play/${c2eId}`;
+      const redirectUrl = `${process.env.REACT_APP_BASEURL}play/${c2eId}`;
 
       const resp = await axios.get(redirectUrl);
       return res.send(resp.data);
@@ -108,21 +110,21 @@ class ltiService {
 
   static async resources(req, res) {
     const { page = 1, limit = 10, query = "" } = req.query;
-
-    if (
-      isNaN(parseInt(page)) ||
-      isNaN(parseInt(limit)) ||
-      typeof query !== "string"
-    ) {
-      return res.status(400).send({
-        status: 400,
-        error: "Invalid parameter type",
-        details: {
-          description: "The query params provided are not formatted properly",
-          message: "Invalid parameter type",
-        },
-      });
-    }
+    // need to remove this code as requset filtering is added
+    // if (
+    //   isNaN(parseInt(page)) ||
+    //   isNaN(parseInt(limit)) ||
+    //   typeof query !== "string"
+    // ) {
+    //   return res.status(400).send({
+    //     status: 400,
+    //     error: "Invalid parameter type",
+    //     details: {
+    //       description: "The query params provided are not formatted properly",
+    //       message: "Invalid parameter type",
+    //     },
+    //   });
+    // }
 
     var platformSettings = await PlatformSetting.findOne({
       where: { lti_client_id: res.locals.token.clientId },
@@ -130,11 +132,10 @@ class ltiService {
     if (!platformSettings) {
       return res.status(400).send({
         status: 400,
-        error: "No matching platform settings found",
+        error: ERROR_CODES.NO_MATCHING_PLATFORM_FOUND.message,
         details: {
-          description:
-            "Your LTI authentication information doesn't match any existing platform settings in the C2E player",
-          message: "No matching platform settings found",
+          description: ERROR_CODES.NO_MATCHING_PLATFORM_FOUND.description,
+          message: ERROR_CODES.NO_MATCHING_PLATFORM_FOUND.message,
         },
       });
     }
@@ -142,7 +143,7 @@ class ltiService {
     const licensesUrl = `${platformSettings.cee_provider_url}/licenses`;
     const params = {
       page,
-      limit: 9000,
+      limit: 9000, // needs to update this static value
       query,
       email: platformSettings.cee_licensee_id,
       secret: platformSettings.cee_secret_key,
@@ -156,11 +157,10 @@ class ltiService {
       .catch((error) => {
         res.status(400).send({
           status: 400,
-          error: "Failed to retrieve licenses",
+          error: ERROR_CODES.FAILED_TO_RETRIEVE_LICENSE.message,
           details: {
-            description:
-              "Failed to retrieve licenses. Please check your licensee settings",
-            message: "Failed to retrieve licenses",
+            description: ERROR_CODES.FAILED_TO_RETRIEVE_LICENSE.description,
+            message: ERROR_CODES.FAILED_TO_RETRIEVE_LICENSE.message,
           },
         });
       });
@@ -173,11 +173,10 @@ class ltiService {
     if (!platformSettings) {
       return res.status(400).send({
         status: 400,
-        error: "No matching platform settings found",
+        error: ERROR_CODES.NO_MATCHING_PLATFORM_FOUND.message,
         details: {
-          description:
-            "Your LTI authentication information doesn't match any existing platform settings in the C2E player",
-          message: "No matching platform settings found",
+          description: ERROR_CODES.NO_MATCHING_PLATFORM_FOUND.description,
+          message: ERROR_CODES.NO_MATCHING_PLATFORM_FOUND.message,
         },
       });
     }
@@ -210,11 +209,10 @@ class ltiService {
     } catch (e) {
       return res.status(400).send({
         status: 400,
-        error: "Failed to stream file",
+        error: ERROR_CODES.FAILED_TO_STREAM_FILE.message,
         details: {
-          description:
-            "Could not stream C2E content. Please check your licensee settings and query params",
-          message: "Failed to stream file",
+          description: ERROR_CODES.FAILED_TO_STREAM_FILE.description,
+          message: ERROR_CODES.FAILED_TO_STREAM_FILE.message,
         },
       });
     }
@@ -227,11 +225,10 @@ class ltiService {
     if (!platformSettings) {
       return res.status(400).send({
         status: 400,
-        error: "No matching platform settings found",
+        error: ERROR_CODES.NO_MATCHING_PLATFORM_FOUND.message,
         details: {
-          description:
-            "Your LTI authentication information doesn't match any existing platform settings in the C2E player",
-          message: "No matching platform settings found",
+          description: ERROR_CODES.NO_MATCHING_PLATFORM_FOUND.description,
+          message: ERROR_CODES.NO_MATCHING_PLATFORM_FOUND.message,
         },
       });
     }
@@ -239,11 +236,10 @@ class ltiService {
     if (!req.body.id || !req.body.verb) {
       return res.status(400).send({
         status: 400,
-        error: "No xAPI statement provided",
+        error: ERROR_CODES.NO_XAPI_STATEMENT_PROVIDED.message,
         details: {
-          description:
-            "The request params provided do not match a valid xAPI statement format",
-          message: "No xAPI statement provided",
+          description: ERROR_CODES.NO_XAPI_STATEMENT_PROVIDED.description,
+          message: ERROR_CODES.NO_XAPI_STATEMENT_PROVIDED.message,
         },
       });
     }
@@ -264,11 +260,10 @@ class ltiService {
         console.log(error);
         return res.status(400).send({
           status: 400,
-          error: "Failed to send  xAPI statement to service provider",
+          error: ERROR_CODES.FAILED_TO_SEND_XAPI_STATEMENT_TO_PROVIDER_SERVICE_PROVIDER.message,
           details: {
-            description:
-              "Failed to send  xAPI statement to service provider. Check your integration settings",
-            message: "Failed to send  xAPI statement to service provider",
+            description: ERROR_CODES.FAILED_TO_SEND_XAPI_STATEMENT_TO_PROVIDER_SERVICE_PROVIDER.description,
+            message: ERROR_CODES.FAILED_TO_SEND_XAPI_STATEMENT_TO_PROVIDER_SERVICE_PROVIDER.message,
           },
         });
       });
@@ -277,7 +272,7 @@ class ltiService {
   static async registerPlatform(req, res) {
     const params = req.body;
     if (process.env.ADMIN_SECRET != params.secret)
-      return res.status(400).send("Invalid parameters.");
+      return res.status(400).send(ERROR_CODES.INVALID_PARAMETERS.message);
 
     await lti.registerPlatform({
       url: params.url,
@@ -290,7 +285,7 @@ class ltiService {
         key: params.authConfigKey,
       },
     });
-    return res.status(200).send("Platform registered successfully.");
+    return res.status(200).send(SUCCESS_CODES.PLATFORM_REGISTERED_SUCCESSFULLY.message);
   }
 }
 
