@@ -358,7 +358,7 @@
         }
       }
     },
-    "/play/:c2eId": {
+    "/play": {
       "post": {
         "x-swagger-router-controller": "play",
         "operationId": "play",
@@ -727,7 +727,7 @@
         }
       }
     },
-    "/resources/:page/:limit": {
+    "/resources": {
       "get": {
         "x-swagger-router-controller": "members",
         "operationId": "members",
@@ -849,7 +849,7 @@
         }
       }
     },
-    "/stream/:ceeId": {
+    "/stream": {
       "get": {
         "x-swagger-router-controller": "members",
         "operationId": "members",
