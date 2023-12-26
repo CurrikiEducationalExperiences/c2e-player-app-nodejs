@@ -825,61 +825,6 @@
         }
       }
     },
-    "/xapi/statements": {
-      "get": {
-        "x-swagger-router-controller": "members",
-        "operationId": "members",
-        "tags": ["LTI Routes"],
-        "summary": "Get Members Details Endpoint",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Authorization",
-            "type": "string",
-            "default": "Bearer {token}",
-            "required": true
-          },
-          {
-            "name": "payload",
-            "in": "body",
-            "description": "Xapi Statement details",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "example": "Some string"
-                },
-                "verb": {
-                  "type": "object",
-                  "example": {
-                    "id": "xxxxxxxxxx",
-                    "display": {
-                      "en-US": "consumed"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Response Format",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "string",
-                  "example": "ok"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/platform/register": {
       "post": {
         "x-swagger-router-controller": "Platform Registration",

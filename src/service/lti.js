@@ -147,7 +147,6 @@ class ltiService {
       email: platformSettings.cee_licensee_id,
       secret: platformSettings.cee_secret_key,
     };
-
     await axios
       .get(licensesUrl, { params })
       .then(async (response) => {
