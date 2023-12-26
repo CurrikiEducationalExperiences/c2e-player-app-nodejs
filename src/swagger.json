@@ -304,6 +304,47 @@
         }
       }
     },
+    "/members": {
+      "get": {
+        "x-swagger-router-controller": "members",
+        "operationId": "members",
+        "tags": ["LTI Routes"],
+        "summary": "Get Members Details Endpoint",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "array",
+              "example": [
+                {
+                  "status": "Active",
+                  "name": "Jhon Doe",
+                  "picture": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "given_name": "Jhon",
+                  "family_name": "Doe",
+                  "email": "jhondoe@curriki.org",
+                  "user_id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "lti11_legacy_user_id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                  "roles": [
+                    "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
     "/deeplink": {
       "post": {
         "x-swagger-router-controller": "deeplink",
@@ -391,108 +432,6 @@
               "text/html": {
                 "example": "<!DOCTYPE html><html><head><title>HTML Form</title></head><body><form action='/submit' method='post'><label for='inputField'>Input Field:</label><input type='text' id='inputField' name='inputField'><br><input type='submit' value='Submit'></form></body></html>"
               }
-            }
-          }
-        }
-      }
-    },
-    "/platform/register": {
-      "post": {
-        "x-swagger-router-controller": "Platform Registration",
-        "operationId": "Platform Registration",
-        "tags": ["LTI Routes"],
-        "summary": "Platform Registration Endpoint",
-        "parameters": [
-          {
-            "name": "payload",
-            "in": "body",
-            "description": "Platform details",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "url": {
-                  "type": "string",
-                  "example": "Some string"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "Some string"
-                },
-                "clientId": {
-                  "type": "string",
-                  "example": "Some string"
-                },
-                "authenticationEndpoint": {
-                  "type": "string",
-                  "example": "Some string"
-                },
-                "accesstokenEndpoint": {
-                  "type": "string",
-                  "example": "Some string"
-                },
-                "authConfigMethod": {
-                  "type": "string",
-                  "example": "Some string"
-                },
-                "authConfigKey": {
-                  "type": "string",
-                  "example": "Some string"
-                },
-                "secret": {
-                  "type": "string",
-                  "example": "Some string"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Response Format",
-            "schema": {
-              "type": "string",
-              "example": "Platform registered successfully."
-            }
-          }
-        }
-      }
-    },
-    "/members": {
-      "get": {
-        "x-swagger-router-controller": "members",
-        "operationId": "members",
-        "tags": ["LTI Routes"],
-        "summary": "Get Members Details Endpoint",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Authorization",
-            "type": "string",
-            "default": "Bearer {token}",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Response Format",
-            "schema": {
-              "type": "array",
-              "example": [
-                {
-                  "status": "Active",
-                  "name": "Jhon Doe",
-                  "picture": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
-                  "given_name": "Jhon",
-                  "family_name": "Doe",
-                  "email": "jhondoe@curriki.org",
-                  "user_id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
-                  "lti11_legacy_user_id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
-                  "roles": [
-                    "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
-                  ]
-                }
-              ]
             }
           }
         }
@@ -936,6 +875,67 @@
                   "example": "ok"
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "/platform/register": {
+      "post": {
+        "x-swagger-router-controller": "Platform Registration",
+        "operationId": "Platform Registration",
+        "tags": ["LTI Routes"],
+        "summary": "Platform Registration Endpoint",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "Platform details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "clientId": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "authenticationEndpoint": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "accesstokenEndpoint": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "authConfigMethod": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "authConfigKey": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "secret": {
+                  "type": "string",
+                  "example": "Some string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "string",
+              "example": "Platform registered successfully."
             }
           }
         }
