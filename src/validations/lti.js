@@ -12,31 +12,31 @@ module.exports.registerPlatform = Joi.object({
 });
 
 module.exports.grade = Joi.object({
-  grade: Joi.number().min(0).max(100000000).required(),
+  grade: Joi.number().min(0).max(100000000),
 });
 
 module.exports.play = Joi.object({
-  c2eId: Joi.string().max(100000000).required(),
+  c2eId: Joi.string().max(100000000).allow(""),
 });
 
 module.exports.deeplink = Joi.object({
-  title: Joi.string().max(10000).required(),
-  name: Joi.string().max(10000).required(),
-  value: Joi.string().max(10000).required(),
-  id: Joi.string().max(10000).required(),
+  title: Joi.string().max(10000).allow(""),
+  name: Joi.string().max(10000).allow(""),
+  value: Joi.string().max(10000).allow(""),
+  id: Joi.string().max(10000).allow(""),
 });
 
 module.exports.resources = Joi.object({
-  page: Joi.number().min(1).max(10000).required(),
-  limit: Joi.number().min(1).max(10000).required(),
-  query: Joi.string().max(10000).allow("").required(),
+  page: Joi.number().min(1).max(10000),
+  limit: Joi.number().min(1).max(10000),
+  query: Joi.string().max(10000).allow(""),
 });
 
 module.exports.stream = Joi.object({
-  ceeId: Joi.string().max(10000).required(),
+  ceeId: Joi.string().max(10000).allow(""),
 });
 
 module.exports.xapi = Joi.object({
-  id: Joi.string().max(10000).required(),
-  verb: Joi.string().max(10000).required(),
+  id: Joi.string().max(10000).allow(""),
+  verb: Joi.string().max(10000).allow(""),
 });
