@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "title": "C2E-PLAYER-APP-NODEJS"
   },
-  "schemes": ["http"],
+  "schemes": ["http", "https"],
   "paths": {
     "/api/v1/users/register": {
       "post": {
