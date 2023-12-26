@@ -125,7 +125,6 @@ class ltiService {
         },
       });
     }
-    query = "";
     var platformSettings = await PlatformSetting.findOne({
       where: { lti_client_id: res.locals.token.clientId },
     });

@@ -29,7 +29,7 @@ module.exports.deeplink = Joi.object({
 module.exports.resources = Joi.object({
   page: Joi.number().min(1).max(10000).required(),
   limit: Joi.number().min(1).max(10000).required(),
-  query: Joi.string().max(10000).required(),
+  query: Joi.string().max(10000).allow("").required(),
 });
 
 module.exports.stream = Joi.object({
