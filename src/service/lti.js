@@ -111,20 +111,20 @@ class ltiService {
   static async resources(req, res) {
     const { page = 1, limit = 10, query = "" } = req.query;
     // need to remove this code as requset filtering is added
-    // if (
-    //   isNaN(parseInt(page)) ||
-    //   isNaN(parseInt(limit)) ||
-    //   typeof query !== "string"
-    // ) {
-    //   return res.status(400).send({
-    //     status: 400,
-    //     error: "Invalid parameter type",
-    //     details: {
-    //       description: "The query params provided are not formatted properly",
-    //       message: "Invalid parameter type",
-    //     },
-    //   });
-    // }
+    if (
+      isNaN(parseInt(page)) ||
+      isNaN(parseInt(limit)) ||
+      typeof query !== "string"
+    ) {
+      return res.status(400).send({
+        status: 400,
+        error: "Invalid parameter type",
+        details: {
+          description: "The query params provided are not formatted properly",
+          message: "Invalid parameter type",
+        },
+      });
+    }
 
     var platformSettings = await PlatformSetting.findOne({
       where: { lti_client_id: res.locals.token.clientId },
