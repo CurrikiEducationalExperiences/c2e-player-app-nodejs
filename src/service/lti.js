@@ -109,7 +109,7 @@ class ltiService {
   }
 
   static async resources(req, res) {
-    const { page = 1, limit = 10, query = "" } = req.query;
+    let { page = 1, limit = 10, query = "" } = req.query;
     // need to remove this code as requset filtering is added
     if (
       isNaN(parseInt(page)) ||
@@ -125,7 +125,7 @@ class ltiService {
         },
       });
     }
-
+    query = "";
     var platformSettings = await PlatformSetting.findOne({
       where: { lti_client_id: res.locals.token.clientId },
     });
