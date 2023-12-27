@@ -38,5 +38,5 @@ module.exports.stream = Joi.object({
 
 module.exports.xapi = Joi.object({
   id: Joi.string().max(10000).allow(""),
-  verb: Joi.string().max(10000).allow(""),
+  verb: Joi.object(),
 });
