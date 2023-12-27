@@ -38,7 +38,7 @@ ltiRouter.get(
   validationMiddleware(ltiValidations.stream, (isGet = true)),
   ltiController.stream
 );
-ltiRouter.get(
+ltiRouter.put(
   "/xapi/statements",
   validationMiddleware(ltiValidations.xapi),
   ltiController.xapi
