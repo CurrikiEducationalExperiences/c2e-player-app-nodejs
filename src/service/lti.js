@@ -4,6 +4,17 @@ const { PlatformSetting } = require("../../models/platformSetting");
 const ERROR_CODES = require("../constant/error-messages");
 const SUCCESS_CODES = require("../constant/success-messages");
 class ltiService {
+  static async members(req, res) {
+    try {
+      const result = await lti.NamesAndRoles.getMembers(res.locals.token);
+      if (result) return res.send(result.members);
+      return res.sendStatus(500);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).send(err.message);
+    }
+  }
+
   static async grade(req, res) {
     try {
       const idtoken = res.locals.token; // IdToken
@@ -51,17 +62,6 @@ class ltiService {
     }
   }
 
-  static async members(req, res) {
-    try {
-      const result = await lti.NamesAndRoles.getMembers(res.locals.token);
-      if (result) return res.send(result.members);
-      return res.sendStatus(500);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).send(err.message);
-    }
-  }
-
   static async deeplink(req, res) {
     try {
       const resource = req.body;
@@ -75,7 +75,6 @@ class ltiService {
           value: resource.value,
         },
       };
-
       const form = await lti.DeepLinking.createDeepLinkingForm(
         res.locals.token,
         items,
@@ -178,7 +177,6 @@ class ltiService {
         },
       });
     }
-
     const { ceeId } = req.query;
     const params = {
       ceeId: ceeId,
