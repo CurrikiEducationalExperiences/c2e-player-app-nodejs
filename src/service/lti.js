@@ -69,11 +69,7 @@ class ltiService {
       const items = {
         type: "ltiResourceLink",
         title: resource.title,
-        url: `${process.env.NODE_APP_BASEURL}play?c2eId=${resource.id}`,
-        custom: {
-          name: resource.name,
-          value: resource.value,
-        },
+        url: `${process.env.NODE_APP_BASEURL}play?c2eId=${resource.id}`
       };
       const form = await lti.DeepLinking.createDeepLinkingForm(
         res.locals.token,

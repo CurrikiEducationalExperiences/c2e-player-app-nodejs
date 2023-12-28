@@ -40,7 +40,7 @@ lti.setup(
       name: process.env.TOOL_NAME, // Tool Provider name. Required field.
       logo: process.env.NODE_APP_BASEURL + "icon.svg", // Tool Provider logo URL.
       description: process.env.TOOL_DESCRIPTION, // Tool Provider description.
-      redirectUris: [process.env.NODE_APP_BASEURL + "launch"], // Additional redirection URLs. The main URL is added by default.
+      redirectUris: [process.env.NODE_APP_BASEURL + "play"], // Additional redirection URLs. The main URL is added by default.
       customParameters: { key: "value" }, // Custom parameters.
       autoActivate: true, // Whether or not dynamically registered Platforms should be automatically activated. Defaults to false.
     },
