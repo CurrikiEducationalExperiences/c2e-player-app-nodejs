@@ -35,6 +35,10 @@ class ltiController {
   static async registerPlatform(req, res) {
     await ltiService.registerPlatform(req, res);
   }
+
+  static async canvasConfigJson(req, res) {
+    await ltiService.canvasConfigJson(req, res);
+  }
 }
 
 module.exports = { ltiController };
