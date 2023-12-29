@@ -48,6 +48,10 @@ ltiRouter.post(
   validationMiddleware(ltiValidations.registerPlatform),
   ltiController.registerPlatform
 );
+ltiRouter.get(
+  "/canvas/config",
+  ltiController.canvasConfigJson
+);
 
 ltiRouter.get("*", (req, res) =>
   res.sendFile(path.join(__dirname, "../../public/index.html"))

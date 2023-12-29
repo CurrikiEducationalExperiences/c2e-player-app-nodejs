@@ -423,4 +423,26 @@ describe("service/lti", () => {
       );
     });
   });
+
+  describe("canvasConfigJson", () => {
+    let req;
+    let res;
+
+    beforeEach(() => {
+      req = {};
+
+      res = {
+        setHeader: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
+      };
+    });
+
+    it("should return canvas config json", async () => {
+      await ltiService.canvasConfigJson(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.setHeader).toHaveBeenCalledWith('Content-Type', 'application/json');
+    });
+  });
 });
