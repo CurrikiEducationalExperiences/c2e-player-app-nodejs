@@ -1,4 +1,4 @@
-const Router = require('../../routes/user');
+const Router = require('../../routes/admin');
 
 describe('route/users', () => {
   it('should have expected api for /register route', async () => {
@@ -25,20 +25,27 @@ describe('route/users', () => {
     expect(result.route.methods).toEqual({ get: true });
   });
 
-  it('should have expected api for /update route', async () => {
-    const path = '/update';
+  it('should have expected api for /updatePassword route', async () => {
+    const path = '/updatePassword';
     const result = await Router.stack.find((s) => s.route.path === path);
     expect(result).not.toBeUndefined();
     expect(result.route.path).toEqual(path);
     expect(result.route.methods).toEqual({ patch: true });
   });
 
-  it('should have expected api for /delete/:id route', async () => {
-    const path = '/delete/:id';
+  it('should have expected api for /forgetPassword route', async () => {
+    const path = '/forgetPassword';
     const result = await Router.stack.find((s) => s.route.path === path);
     expect(result).not.toBeUndefined();
     expect(result.route.path).toEqual(path);
-    expect(result.route.methods).toEqual({ delete: true });
+    expect(result.route.methods).toEqual({ post: true });
   });
 
+  it('should have expected api for /resetPassword route', async () => {
+    const path = '/resetPassword';
+    const result = await Router.stack.find((s) => s.route.path === path);
+    expect(result).not.toBeUndefined();
+    expect(result.route.path).toEqual(path);
+    expect(result.route.methods).toEqual({ patch: true });
+  });
 });

@@ -1,18 +1,18 @@
 const bcrypt = require("bcrypt");
 const ERROR_CODES = require("../constant/error-messages");
 const CustomError = require("../utils/error");
-const { User } = require("../../models/users");
+const { Admin } = require("../../models/admins");
 const { issueToken } = require("../middleware/auth");
-class UserService {
+class AdminService {
   static async register(params) {
-    const existingProfile = await User.findOne({
+    const existingProfile = await Admin.findOne({
       where: { email: params.email },
       raw: true,
     });
     if (existingProfile) {
       throw new CustomError(ERROR_CODES.USER_ALREADY_EXISTS);
     }
-    await User.create({
+    await Admin.create({
       name: params.name,
       email: params.email,
       phone: params.phone,
@@ -22,7 +22,7 @@ class UserService {
   }
 
   static async login(params) {
-    const profile = await User.findOne({
+    const profile = await Admin.findOne({
       where: { email: params.email },
       raw: true,
     });
@@ -37,7 +37,7 @@ class UserService {
   }
 
   static async getProfile(params) {
-    const _user = await User.findOne({
+    const _user = await Admin.findOne({
       where: { id: params.id },
       attributes: { exclude: ["password"] },
       raw: true,
@@ -45,8 +45,8 @@ class UserService {
     return _user;
   }
 
-  static async patch(params) {
-    await User.update(
+  static async updatePassword(params) {
+    await Admin.update(
       {
         phone: params.phone,
       },
@@ -59,16 +59,33 @@ class UserService {
     return true;
   }
 
-  static async delete(params) {
-    if (params.loggedUser.id == params.id) {
-      throw new CustomError(ERROR_CODES.CANNOT_DELETE_LOGGED_USER);
-    }
-    await User.destroy({
-      where: {
-        id: params.id,
+  static async forgetPassword(params) {
+    await Admin.update(
+      {
+        phone: params.phone,
       },
-    });
+      {
+        where: {
+          id: params.loggedUser.id,
+        },
+      }
+    );
     return true;
   }
+
+  static async resetPassword(params) {
+    await Admin.update(
+      {
+        phone: params.phone,
+      },
+      {
+        where: {
+          id: params.loggedUser.id,
+        },
+      }
+    );
+    return true;
+  }
+
 }
-module.exports = { UserService };
+module.exports = { AdminService };
