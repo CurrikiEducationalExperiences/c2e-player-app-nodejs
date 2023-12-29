@@ -69,11 +69,7 @@ class ltiService {
       const items = {
         type: "ltiResourceLink",
         title: resource.title,
-        url: `${process.env.NODE_APP_BASEURL}play?c2eId=${resource.id}`,
-        custom: {
-          name: resource.name,
-          value: resource.value,
-        },
+        url: `${process.env.NODE_APP_BASEURL}play?c2eId=${resource.id}`
       };
       const form = await lti.DeepLinking.createDeepLinkingForm(
         res.locals.token,
@@ -282,6 +278,59 @@ class ltiService {
       },
     });
     return res.status(200).send(SUCCESS_CODES.PLATFORM_REGISTERED_SUCCESSFULLY.message);
+  }
+
+  static async canvasConfigJson(req, res) {
+    // Your data to be sent as JSON
+    const canvasConfigJson = {
+      "title": process.env.TOOL_NAME,
+      "scopes": [
+          "https://purl.imsglobal.org/spec/lti-ags/scope/lineitem",
+          "https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly",
+          "https://purl.imsglobal.org/spec/lti-ags/scope/score",
+          "https://purl.imsglobal.org/spec/lti-ags/scope/result.readonly",
+          "https://purl.imsglobal.org/spec/lti-ags/scope/lineitem.readonly"
+      ],
+      "extensions": [
+          {
+              "platform": "canvas.instructure.com",
+              "settings": {
+                  "platform": "canvas.instructure.com",
+                  "text": process.env.TOOL_NAME,
+                  "icon_url": process.env.NODE_APP_BASEURL + "icon.svg",
+                  "placements": [
+                      {
+                          "text": process.env.TOOL_NAME,
+                          "icon_url": process.env.NODE_APP_BASEURL + "icon.svg",
+                          "placement": "link_selection",
+                          "message_type": "LtiDeepLinkingRequest",
+                          "target_link_uri": process.env.NODE_APP_BASEURL
+                      },
+                      {
+                          "text": process.env.TOOL_NAME,
+                          "icon_url": process.env.NODE_APP_BASEURL + "icon.svg",
+                          "placement": "assignment_selection",
+                          "message_type": "LtiDeepLinkingRequest",
+                          "target_link_uri": process.env.NODE_APP_BASEURL
+                      }
+                  ]
+              },
+              "privacy_level": "public"
+          }
+      ],
+      "public_jwk": {},
+      "description": process.env.TOOL_DESCRIPTION,
+      "custom_fields": {},
+      "public_jwk_url": process.env.NODE_APP_BASEURL + "keys",
+      "target_link_uri": process.env.NODE_APP_BASEURL,
+      "oidc_initiation_url": process.env.NODE_APP_BASEURL + "login"
+    };
+
+    // Set the content type to JSON
+    res.setHeader('Content-Type', 'application/json');
+
+    // Send the JSON response
+    return res.status(200).json(canvasConfigJson);
   }
 }
 

@@ -89,7 +89,7 @@ module.exports = {
   await queryInterface.addIndex('users', ['email']);
   },
   async down(queryInterface) {
-    await queryInterface.dropTable('emailTemplates');
+    await queryInterface.dropTable('accounts');
     await queryInterface.dropTable('users');
   }
 };
