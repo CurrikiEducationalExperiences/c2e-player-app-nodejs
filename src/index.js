@@ -36,11 +36,11 @@ lti.setup(
     devMode: true, // Set DevMode to true if the testing platform is in a different domain and https is not being used
     dynRegRoute: "/register", // Setting up dynamic registration route. Defaults to '/register'
     dynReg: {
-      url: "http://localhost:3000", // Tool Provider URL. Required field.
-      name: "Tool Provider", // Tool Provider name. Required field.
-      logo: "http://localhost:3000/logo512.png", // Tool Provider logo URL.
-      description: "Tool Description", // Tool Provider description.
-      redirectUris: ["http://localhost:3000/launch"], // Additional redirection URLs. The main URL is added by default.
+      url: process.env.NODE_APP_BASEURL, // Tool Provider URL. Required field.
+      name: process.env.TOOL_NAME, // Tool Provider name. Required field.
+      logo: process.env.NODE_APP_BASEURL + "icon.svg", // Tool Provider logo URL.
+      description: process.env.TOOL_DESCRIPTION, // Tool Provider description.
+      redirectUris: [process.env.NODE_APP_BASEURL + "play"], // Additional redirection URLs. The main URL is added by default.
       customParameters: { key: "value" }, // Custom parameters.
       autoActivate: true, // Whether or not dynamically registered Platforms should be automatically activated. Defaults to false.
     },
@@ -80,7 +80,10 @@ lti.whitelist(new RegExp(/^\/api-docs/), {
   route: new RegExp(/^api\/v1/),
   method: "get",
 });
-lti.whitelist({ route: "/platform/register", method: "post" });
+lti.whitelist(
+  { route: "/platform/register", method: "post" },
+  { route: "/canvas/config", method: "get" }
+);
 
 /////////////////// BODY PARSER ///////////////////
 lti.app.use(bodyParser.urlencoded({ extended: false }));

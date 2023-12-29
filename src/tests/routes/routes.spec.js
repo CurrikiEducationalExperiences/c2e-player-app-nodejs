@@ -62,7 +62,7 @@ describe('route/accounts', () => {
     const result = await Router.stack.find((s) => s.route.path === path);
     expect(result).not.toBeUndefined();
     expect(result.route.path).toEqual(path);
-    expect(result.route.methods).toEqual({ get: true });
+    expect(result.route.methods).toEqual({ put: true });
   });
 
   it('should have expected api for /platform/register route', async () => {
@@ -71,6 +71,14 @@ describe('route/accounts', () => {
     expect(result).not.toBeUndefined();
     expect(result.route.path).toEqual(path);
     expect(result.route.methods).toEqual({ post: true });
+  });
+
+  it('should have expected api for /canvas/config route', async () => {
+    const path = '/canvas/config';
+    const result = await Router.stack.find((s) => s.route.path === path);
+    expect(result).not.toBeUndefined();
+    expect(result.route.path).toEqual(path);
+    expect(result.route.methods).toEqual({ get: true });
   });
 
   it('should have expected api for * route', async () => {

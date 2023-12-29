@@ -202,5 +202,23 @@ describe("controller/routes", () => {
     });
   });
 
+  describe("canvas config json", () => {
+    it("should return canvas config json", async () => {
+      const req = {};
+      const result = {
+        code: 200,
+        data: [],
+      };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        result,
+      };
+      const next = jest.fn();
+      jest.spyOn(ltiService, "canvasConfigJson").mockResolvedValueOnce(result);
+      await ltiController.canvasConfigJson(req, res, next);
+      expect(res.result).toEqual(result);
+    });
+  });
+
 
 });

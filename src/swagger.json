@@ -825,6 +825,61 @@
         }
       }
     },
+    "/xapi/statements": {
+      "put": {
+        "x-swagger-router-controller": "members",
+        "operationId": "members",
+        "tags": ["LTI Routes"],
+        "summary": "Get Members Details Endpoint",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "Xapi Statement details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "Some string"
+                },
+                "verb": {
+                  "type": "object",
+                  "example": {
+                    "id": "xxxxxxxxxx",
+                    "display": {
+                      "en-US": "consumed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "ok"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/platform/register": {
       "post": {
         "x-swagger-router-controller": "Platform Registration",
@@ -881,6 +936,66 @@
             "schema": {
               "type": "string",
               "example": "Platform registered successfully."
+            }
+          }
+        }
+      }
+    },
+    "/canvas/config": {
+      "get": {
+        "x-swagger-router-controller": "Canvas Config",
+        "operationId": "Canvas Config",
+        "tags": ["Public"],
+        "summary": "Canvas Config JSON Endpoint",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "example": {
+                "title": "Curriki Educational Experiences",
+                "scopes": [
+                    "https://purl.imsglobal.org/spec/lti-ags/scope/lineitem",
+                    "https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly",
+                    "https://purl.imsglobal.org/spec/lti-ags/scope/score",
+                    "https://purl.imsglobal.org/spec/lti-ags/scope/result.readonly",
+                    "https://purl.imsglobal.org/spec/lti-ags/scope/lineitem.readonly"
+                ],
+                "extensions": [
+                    {
+                        "platform": "canvas.instructure.com",
+                        "settings": {
+                            "platform": "canvas.instructure.com",
+                            "text": "Curriki Educational Experiences",
+                            "icon_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/icon.svg",
+                            "placements": [
+                                {
+                                    "text": "Curriki Educational Experiences",
+                                    "icon_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/icon.svg",
+                                    "placement": "link_selection",
+                                    "message_type": "LtiDeepLinkingRequest",
+                                    "target_link_uri": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                                },
+                                {
+                                    "text": "Curriki Educational Experiences",
+                                    "icon_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/icon.svg",
+                                    "placement": "assignment_selection",
+                                    "message_type": "LtiDeepLinkingRequest",
+                                    "target_link_uri": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                                }
+                            ]
+                        },
+                        "privacy_level": "public"
+                    }
+                ],
+                "public_jwk": {},
+                "description": "Curriki Educational Experiences LTI 1.3 Tool",
+                "custom_fields": {},
+                "public_jwk_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/keys",
+                "target_link_uri": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
+                "oidc_initiation_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/login"
+              }
             }
           }
         }

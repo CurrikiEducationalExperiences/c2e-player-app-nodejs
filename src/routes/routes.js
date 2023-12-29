@@ -38,7 +38,7 @@ ltiRouter.get(
   validationMiddleware(ltiValidations.stream, (isGet = true)),
   ltiController.stream
 );
-ltiRouter.get(
+ltiRouter.put(
   "/xapi/statements",
   validationMiddleware(ltiValidations.xapi),
   ltiController.xapi
@@ -47,6 +47,10 @@ ltiRouter.post(
   "/platform/register",
   validationMiddleware(ltiValidations.registerPlatform),
   ltiController.registerPlatform
+);
+ltiRouter.get(
+  "/canvas/config",
+  ltiController.canvasConfigJson
 );
 
 ltiRouter.get("*", (req, res) =>
