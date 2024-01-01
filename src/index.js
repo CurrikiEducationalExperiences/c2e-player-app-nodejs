@@ -53,7 +53,7 @@ lti.onConnect(async (token, req, res) => {
 
 lti.onDeepLinking(async (token, req, res) => {
   if (req.query.c2eId) {
-    return lti.redirect(res, `/play`, { newResource: true });
+    return lti.redirect(res, `/play/${req.query.c2eId}`, { newResource: true });
   } else {
     return lti.redirect(res, "/deeplink", { newResource: true });
   }
