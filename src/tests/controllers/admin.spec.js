@@ -1,14 +1,12 @@
-const { UserController } = require("../../controllers/user");
-const { UserService } = require("../../service/user");
+const { AdminController } = require("../../controllers/admin");
+const { AdminService } = require("../../service/admin");
 
-describe("controller/user", () => {
+describe("controller/admin", () => {
   describe("register", () => {
     it("should register a user", async () => {
       const req = {
         body: {
-          name: "Mehmood Hussain",
-          phone: "+923000628070",
-          email: "mehmood.hussain@tkxel246.com",
+          email: "mehmood.hussain@tkxel.com",
           password: "password",
         },
       };
@@ -21,8 +19,8 @@ describe("controller/user", () => {
         result,
       };
       const next = jest.fn();
-      jest.spyOn(UserService, "register").mockResolvedValueOnce(result);
-      await UserController.register(req, res, next);
+      jest.spyOn(AdminService, "register").mockResolvedValueOnce(result);
+      await AdminController.register(req, res, next);
       expect(res.result).toEqual(result);
     });
   });
@@ -44,8 +42,8 @@ describe("controller/user", () => {
         result,
       };
       const next = jest.fn();
-      jest.spyOn(UserService, "login").mockResolvedValueOnce(result);
-      await UserController.login(req, res, next);
+      jest.spyOn(AdminService, "login").mockResolvedValueOnce(result);
+      await AdminController.login(req, res, next);
       expect(res.result).toEqual(result);
     });
   });
@@ -68,17 +66,19 @@ describe("controller/user", () => {
         result,
       };
       const next = jest.fn();
-      jest.spyOn(UserService, "getProfile").mockResolvedValueOnce(result);
-      await UserController.getProfile(req, res, next);
+      jest.spyOn(AdminService, "getProfile").mockResolvedValueOnce(result);
+      await AdminController.getProfile(req, res, next);
       expect(res.result).toEqual(result);
     });
   });
 
-  describe("update", () => {
+  describe("updatePassword", () => {
     it("should update signed in user", async () => {
       const req = {
         body: {
-          phone: "+923000628070",
+          currentPassword: "password",
+          newPassword: "password1",
+          confirmPassword: "password1",
         },
       };
       const result = {
@@ -90,17 +90,18 @@ describe("controller/user", () => {
         result,
       };
       const next = jest.fn();
-      jest.spyOn(UserService, "patch").mockResolvedValueOnce(result);
-      await UserController.patch(req, res, next);
+      jest.spyOn(AdminService, "updatePassword").mockResolvedValueOnce(result);
+      await AdminController.updatePassword(req, res, next);
       expect(res.result).toEqual(result);
     });
   });
 
-  describe("delete/:id", () => {
-    it("should delete a user", async () => {
+  describe("forgetPassword", () => {
+    it("should send the email with OTP", async () => {
       const req = {
-        body: {},
-        params: { id: 1 },
+        body: {
+          email: "someone@mail.com",
+        },
       };
       const result = {
         code: 200,
@@ -111,8 +112,33 @@ describe("controller/user", () => {
         result,
       };
       const next = jest.fn();
-      jest.spyOn(UserService, "delete").mockResolvedValueOnce(result);
-      await UserController.delete(req, res, next);
+      jest.spyOn(AdminService, "forgetPassword").mockResolvedValueOnce(result);
+      await AdminController.forgetPassword(req, res, next);
+      expect(res.result).toEqual(result);
+    });
+  });
+
+  describe("resetPassword", () => {
+    it("should reset the password", async () => {
+      const req = {
+        body: {
+          email: "someone@mail.com",
+          password: "someone@mail.com",
+          confirmPassword: "someone@mail.com",
+          otp: "someone@mail.com",
+        },
+      };
+      const result = {
+        code: 200,
+        data: [],
+      };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        result,
+      };
+      const next = jest.fn();
+      jest.spyOn(AdminService, "resetPassword").mockResolvedValueOnce(result);
+      await AdminController.resetPassword(req, res, next);
       expect(res.result).toEqual(result);
     });
   });

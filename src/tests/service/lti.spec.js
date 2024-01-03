@@ -1,15 +1,15 @@
-const nock = require("nock");
-const { mockSequelize } = require("../index");
+// const nock = require("nock");
+// const { mockSequelize } = require("../index");
 const lti = require("ltijs").Provider;
 const axios = require("axios");
-mockSequelize();
+//mockSequelize();
 const { ltiService } = require("../../service/lti");
-const { PlatformSetting } = require("../../../models/platformSetting");
+const { PlatformSettings } = require("../../../models/platformSettings");
 const ERROR_CODES = require("../../constant/error-messages");
 const SUCCESS_CODES = require("../../constant/success-messages");
 
-jest.mock("../../../models/platformSetting", () => ({
-  PlatformSetting: {
+jest.mock("../../../models/platformSettings", () => ({
+  PlatformSettings: {
     findOne: jest.fn(),
   },
 }));
@@ -55,8 +55,8 @@ jest.mock("ltijs", () => {
 
 describe("service/lti", () => {
   beforeEach(() => {
-    PlatformSetting.findOne.mockReset();
-    nock.cleanAll();
+    PlatformSettings.findOne.mockReset();
+  //  nock.cleanAll();
   });
   afterEach(() => {
     jest.resetAllMocks();
@@ -261,13 +261,13 @@ describe("service/lti", () => {
       };
     });
     it("should return error for no matching platform", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce(null);
+      PlatformSettings.findOne.mockResolvedValueOnce(null);
       await ltiService.resources(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
     });
 
     it("should fetch resources", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce({
+      PlatformSettings.findOne.mockResolvedValueOnce({
         cee_provider_url: "mock-provider-url",
         cee_licensee_id: "mock-licensee-id",
         cee_secret_key: "mock-secret-key",
@@ -300,13 +300,13 @@ describe("service/lti", () => {
     });
 
     it("should return error no matching platform found", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce(null);
+      PlatformSettings.findOne.mockResolvedValueOnce(null);
       await ltiService.stream(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
     });
 
     it("should return the file to be streamed", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce({
+      PlatformSettings.findOne.mockResolvedValueOnce({
         cee_licensee_id: "zxczxc",
         cee_secret_key: "mkjn",
         cee_provider_url: "ioo90o",
@@ -354,20 +354,20 @@ describe("service/lti", () => {
     });
 
     it("should return error no matching platform found", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce(null);
+      PlatformSettings.findOne.mockResolvedValueOnce(null);
       await ltiService.xapi(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
     });
 
     it("should return error for invalid inputs", async () => {
       req.body.id = null;
-      PlatformSetting.findOne.mockResolvedValueOnce(true);
+      PlatformSettings.findOne.mockResolvedValueOnce(true);
       await ltiService.xapi(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
     });
 
     it("should return the file to be streamed", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce({
+      PlatformSettings.findOne.mockResolvedValueOnce({
         cee_licensee_id: "zxczxc",
         cee_secret_key: "mkjn",
         cee_provider_url: "ioo90o",
