@@ -1,4 +1,4 @@
-const Router = require('../../routes/routes');
+const Router = require('../../routes/lti');
 
 describe('route/accounts', () => {
   it('should have expected api for /grade route', async () => {
@@ -19,14 +19,6 @@ describe('route/accounts', () => {
 
   it('should have expected api for /deeplink route', async () => {
     const path = '/deeplink';
-    const result = await Router.stack.find((s) => s.route.path === path);
-    expect(result).not.toBeUndefined();
-    expect(result.route.path).toEqual(path);
-    expect(result.route.methods).toEqual({ post: true });
-  });
-
-  it('should have expected api for /play route', async () => {
-    const path = '/play';
     const result = await Router.stack.find((s) => s.route.path === path);
     expect(result).not.toBeUndefined();
     expect(result.route.path).toEqual(path);

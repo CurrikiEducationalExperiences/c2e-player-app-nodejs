@@ -1,6 +1,6 @@
 const axios = require("axios");
 const lti = require("ltijs").Provider;
-const { PlatformSetting } = require("../../models/platformSetting");
+const { PlatformSettings } = require("../../models/platformSettings");
 const ERROR_CODES = require("../constant/error-messages");
 const SUCCESS_CODES = require("../constant/success-messages");
 class ltiService {
@@ -84,19 +84,6 @@ class ltiService {
     }
   }
 
-  static async play(req, res) {
-    try {
-      const c2eId = req.query.c2eId;
-      const redirectUrl = `${process.env.REACT_APP_BASEURL}play/${c2eId}`;
-
-      const resp = await axios.get(redirectUrl);
-      return res.send(resp.data);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).send(err.message);
-    }
-  }
-
   static async info(req, res) {
     const token = res.locals.token;
     const context = res.locals.context;
@@ -120,7 +107,7 @@ class ltiService {
         },
       });
     }
-    var platformSettings = await PlatformSetting.findOne({
+    var platformSettings = await PlatformSettings.findOne({
       where: { lti_client_id: res.locals.token.clientId },
     });
     if (!platformSettings) {
@@ -160,7 +147,7 @@ class ltiService {
   }
 
   static async stream(req, res) {
-    var platformSettings = await PlatformSetting.findOne({
+    var platformSettings = await PlatformSettings.findOne({
       where: { lti_client_id: res.locals.token.clientId },
     });
     if (!platformSettings) {
@@ -211,7 +198,7 @@ class ltiService {
   }
 
   static async xapi(req, res) {
-    var platformSettings = await PlatformSetting.findOne({
+    var platformSettings = await PlatformSettings.findOne({
       where: { lti_client_id: res.locals.token.clientId },
     });
     if (!platformSettings) {

@@ -1,18 +1,32 @@
-const nock = require("nock");
-const { mockSequelize } = require("../index");
 const lti = require("ltijs").Provider;
 const axios = require("axios");
-mockSequelize();
 const { ltiService } = require("../../service/lti");
-const { PlatformSetting } = require("../../../models/platformSetting");
+const { PlatformSettings } = require("../../../models/platformSettings");
 const ERROR_CODES = require("../../constant/error-messages");
 const SUCCESS_CODES = require("../../constant/success-messages");
 
-jest.mock("../../../models/platformSetting", () => ({
-  PlatformSetting: {
+jest.mock("../../../models/platformSettings", () => ({
+  PlatformSettings: {
     findOne: jest.fn(),
   },
 }));
+jest.mock("axios");
+jest.mock("ltijs", () => {
+  return {
+    Provider: {
+      NamesAndRoles: { getMembers: jest.fn() },
+      registerPlatform: jest.fn(),
+      Grade: {
+        getLineItems: jest.fn(),
+        createLineItem: jest.fn(),
+        submitScore: jest.fn(),
+      },
+      DeepLinking: {
+        createDeepLinkingForm: jest.fn(),
+      },
+    },
+  };
+});
 jest.mock("axios");
 // jest.mock("ltijs", () => {
 //   const NamesAndRoles = {
@@ -55,8 +69,7 @@ jest.mock("ltijs", () => {
 
 describe("service/lti", () => {
   beforeEach(() => {
-    PlatformSetting.findOne.mockReset();
-    nock.cleanAll();
+    PlatformSettings.findOne.mockReset();
   });
   afterEach(() => {
     jest.resetAllMocks();
@@ -183,36 +196,6 @@ describe("service/lti", () => {
     });
   });
 
-  describe("play", () => {
-    let req;
-    let res;
-    jest.mock("axios");
-
-    beforeEach(() => {
-      req = {
-        query: {
-          c2eId: "id",
-        },
-      };
-
-      res = {
-        send: jest.fn(),
-        status: jest.fn().mockReturnThis(),
-      };
-    });
-
-    it("should make a successful request to the external API and send the response", async () => {
-      const mockData = { someKey: "someValue" };
-      jest.spyOn(axios, "get").mockResolvedValueOnce({ data: mockData });
-      await ltiService.play(req, res);
-      expect(axios.get).toHaveBeenCalledWith(
-        `${process.env.REACT_APP_BASEURL}play/${req.query.c2eId}`
-      );
-      expect(res.send).toHaveBeenCalledWith(mockData);
-      expect(res.status).not.toHaveBeenCalled();
-    });
-  });
-
   describe("info", () => {
     let req;
     let res;
@@ -261,13 +244,13 @@ describe("service/lti", () => {
       };
     });
     it("should return error for no matching platform", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce(null);
+      PlatformSettings.findOne.mockResolvedValueOnce(null);
       await ltiService.resources(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
     });
 
     it("should fetch resources", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce({
+      PlatformSettings.findOne.mockResolvedValueOnce({
         cee_provider_url: "mock-provider-url",
         cee_licensee_id: "mock-licensee-id",
         cee_secret_key: "mock-secret-key",
@@ -300,13 +283,13 @@ describe("service/lti", () => {
     });
 
     it("should return error no matching platform found", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce(null);
+      PlatformSettings.findOne.mockResolvedValueOnce(null);
       await ltiService.stream(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
     });
 
     it("should return the file to be streamed", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce({
+      PlatformSettings.findOne.mockResolvedValueOnce({
         cee_licensee_id: "zxczxc",
         cee_secret_key: "mkjn",
         cee_provider_url: "ioo90o",
@@ -354,20 +337,20 @@ describe("service/lti", () => {
     });
 
     it("should return error no matching platform found", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce(null);
+      PlatformSettings.findOne.mockResolvedValueOnce(null);
       await ltiService.xapi(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
     });
 
     it("should return error for invalid inputs", async () => {
       req.body.id = null;
-      PlatformSetting.findOne.mockResolvedValueOnce(true);
+      PlatformSettings.findOne.mockResolvedValueOnce(true);
       await ltiService.xapi(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
     });
 
     it("should return the file to be streamed", async () => {
-      PlatformSetting.findOne.mockResolvedValueOnce({
+      PlatformSettings.findOne.mockResolvedValueOnce({
         cee_licensee_id: "zxczxc",
         cee_secret_key: "mkjn",
         cee_provider_url: "ioo90o",
