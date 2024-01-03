@@ -27,45 +27,6 @@ jest.mock("ltijs", () => {
     },
   };
 });
-jest.mock("axios");
-// jest.mock("ltijs", () => {
-//   const NamesAndRoles = {
-//     getMembers: jest.fn(),
-//   };
-//   const Grade = {
-//     getLineItems: jest.fn(),
-//     createLineItem: jest.fn(),
-//     submitScore: jest.fn(),
-//   };
-//   const DeepLinking = {
-//     createDeepLinkingForm: jest.fn(),
-//   };
-//   const registerPlatform = jest.fn();
-//   return {
-//     Provider: {
-//       NamesAndRoles,
-//       registerPlatform,
-//       Grade,
-//       DeepLinking,
-//     },
-//   };
-// });
-jest.mock("ltijs", () => {
-  return {
-    Provider: {
-      NamesAndRoles: { getMembers: jest.fn() },
-      registerPlatform: jest.fn(),
-      Grade: {
-        getLineItems: jest.fn(),
-        createLineItem: jest.fn(),
-        submitScore: jest.fn(),
-      },
-      DeepLinking: {
-        createDeepLinkingForm: jest.fn(),
-      },
-    },
-  };
-});
 
 describe("service/lti", () => {
   beforeEach(() => {
