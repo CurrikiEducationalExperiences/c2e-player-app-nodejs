@@ -129,7 +129,7 @@ class AdminService {
         email: params.email,
         token: _token,
       });
-      return true;
+      return _token;
     } else {
       await ResetPasswordTokens.update(
         {
@@ -141,7 +141,7 @@ class AdminService {
           },
         }
       );
-      return true;
+      return _token;
     }
   }
 
