@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../src/utils/database");
 
-const PlatformSetting = sequelize.define("platformsetting", {
+const PlatformSettings = sequelize.define("platformsettings", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -25,4 +25,4 @@ const PlatformSetting = sequelize.define("platformsetting", {
   }
 });
 
-module.exports = { PlatformSetting };
+module.exports = { PlatformSettings };

@@ -2,7 +2,8 @@
 const jwt = require("jsonwebtoken");
 const ERROR_CODES = require("../constant/error-messages");
 const CustomError = require("../utils/error");
-const { User } = require("../../models/users");
+const { Admin } = require("../../models/admins");
+const { ResetPasswordTokens } = require("../../models/resetPasswordTokens");
 const authMiddleware = async (req, res, next) => {
   try {
     if (!req.headers.authorization) {
@@ -44,6 +45,26 @@ const issueToken = (payload) => {
   });
 };
 
+const issueResetPassToken = (payload) => {
+  return jwt.sign(payload, "someresetpasswordsecret", {
+    expiresIn: `1m`,
+  });
+};
+
+const validatePasswordToken = (token) => {
+  if (!token) {
+    return 404;
+  }
+  try {
+    const _decoded = jwt.verify(token, 'someresetpasswordsecret');
+    return _decoded;
+  }
+  catch (err) {
+    return 404
+  }
+}
+
+
 const verify = async (token, done) => {
   jwt.verify(token, "somesecret", {}, async (err, decoded) => {
     if (err) {
@@ -56,7 +77,7 @@ const verify = async (token, done) => {
           return done(ERROR_CODES.AUTH_TOKEN_INVALID);
       }
     } else {
-      const user = await User.findOne( { where: {id: decoded.id}, raw: true});
+      const user = await Admin.findOne( { where: {id: decoded.id}, raw: true});
       return user && user.id
         ? done(null, user)
         : done(ERROR_CODES.AUTH_TOKEN_EXPIRED);
@@ -67,4 +88,6 @@ const verify = async (token, done) => {
 module.exports = {
   authMiddleware,
   issueToken,
+  issueResetPassToken,
+  validatePasswordToken,
 };

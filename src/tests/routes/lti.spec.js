@@ -1,4 +1,4 @@
-const Router = require('../../routes/routes');
+const Router = require('../../routes/lti');
 
 describe('route/accounts', () => {
   it('should have expected api for /grade route', async () => {

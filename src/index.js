@@ -6,7 +6,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
-const routes = require("./routes/routes");
+const ltiRoutes = require("./routes/lti");
 const { setRouter } = require("./routes/api");
 const { globalErrorHandler } = require("./utils/response");
 
@@ -108,7 +108,7 @@ if (process.env.ENV === "development") {
 }
 
 setRouter(lti.app);
-lti.app.use(routes);
+lti.app.use(ltiRoutes);
 
 /////// GLOBAL ERROR LANDLER AS MIDDLEWARE //////
 lti.app.use((err, req, res, next) => globalErrorHandler(err, req, res, next));
