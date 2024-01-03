@@ -19,11 +19,11 @@ ltiRouter.post(
   validationMiddleware(ltiValidations.deeplink),
   ltiController.deeplink
 );
-ltiRouter.post(
-  "/play",
-  validationMiddleware(ltiValidations.play, (isGet = true)),
-  ltiController.play
-);
+// ltiRouter.post(
+//   "/play",
+//   validationMiddleware(ltiValidations.play, (isGet = true)),
+//   ltiController.play
+// );
 ltiRouter.get(
   "/info",
   ltiController.info
