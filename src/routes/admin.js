@@ -16,15 +16,16 @@ adminRouter.post(
   AdminController.login
 );
 adminRouter.get("/getProfile", authMiddleware, AdminController.getProfile);
+adminRouter.get("/verifyResetPasswordToken", AdminController.verifyToken);
 adminRouter.patch(
   "/updatePassword",
   authMiddleware,
   validationMiddleware(adminValdations.updatePassword),
-  AdminController.patch
+  AdminController.updatePassword
 );
 adminRouter.post("/forgetPassword", validationMiddleware(adminValdations.forgetPassword),
-AdminController.delete);
+AdminController.forgetPassword);
 adminRouter.post("/resetPassword", validationMiddleware(adminValdations.resetPassword),
-AdminController.delete);
+AdminController.resetPassword);
 
 module.exports = adminRouter;

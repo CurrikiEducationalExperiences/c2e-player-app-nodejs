@@ -11,9 +11,8 @@ module.exports.login = Joi.object({
 });
 
 module.exports.updatePassword = Joi.object({
-  currentPassword: Joi.string().required(),
+  password: Joi.string().required(),
   newPassword: Joi.string().required(),
-  confirmPassword: Joi.string().required(),
 });
 
 module.exports.forgetPassword = Joi.object({
@@ -21,8 +20,6 @@ module.exports.forgetPassword = Joi.object({
 });
 
 module.exports.resetPassword = Joi.object({
-  email: Joi.string().required(),
   password: Joi.string().required(),
-  confirmPassword: Joi.string().required(),
-  otp: Joi.string().required(),
+  token: Joi.string().required(),
 });

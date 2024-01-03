@@ -37,6 +37,18 @@ class AdminController {
     }
   }
 
+  static async verifyToken(req, res, next) {
+    try {
+      const result = await AdminService.verifyToken({token: req.query.token});
+      return responseHandler({
+        response: res,
+        result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async updatePassword(req, res, next) {
     try {
       req.body.loggedUser = req.loggedUser;

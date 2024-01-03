@@ -46,6 +46,6 @@ describe('route/users', () => {
     const result = await Router.stack.find((s) => s.route.path === path);
     expect(result).not.toBeUndefined();
     expect(result.route.path).toEqual(path);
-    expect(result.route.methods).toEqual({ patch: true });
+    expect(result.route.methods).toEqual({ post: true });
   });
 });
