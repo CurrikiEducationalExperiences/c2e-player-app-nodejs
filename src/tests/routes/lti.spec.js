@@ -25,14 +25,6 @@ describe('route/accounts', () => {
     expect(result.route.methods).toEqual({ post: true });
   });
 
-  // it('should have expected api for /play route', async () => {
-  //   const path = '/play';
-  //   const result = await Router.stack.find((s) => s.route.path === path);
-  //   expect(result).not.toBeUndefined();
-  //   expect(result.route.path).toEqual(path);
-  //   expect(result.route.methods).toEqual({ post: true });
-  // });
-
   it('should have expected api for /info route', async () => {
     const path = '/info';
     const result = await Router.stack.find((s) => s.route.path === path);

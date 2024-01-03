@@ -70,28 +70,6 @@ describe("controller/routes", () => {
     });
   });
 
-  describe("play", () => {
-    it("should redirect to play url", async () => {
-      const req = {
-        body: {
-          grade: "A",
-        },
-      };
-      const result = {
-        code: 200,
-        data: [],
-      };
-      const res = {
-        status: jest.fn().mockReturnThis(),
-        result,
-      };
-      const next = jest.fn();
-      jest.spyOn(ltiService, "play").mockResolvedValueOnce(result);
-      await ltiController.play(req, res, next);
-      expect(res.result).toEqual(result);
-    });
-  });
-
   describe("info", () => {
     it("should return info", async () => {
       const req = {

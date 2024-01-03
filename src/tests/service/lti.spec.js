@@ -1,8 +1,5 @@
-// const nock = require("nock");
-// const { mockSequelize } = require("../index");
 const lti = require("ltijs").Provider;
 const axios = require("axios");
-//mockSequelize();
 const { ltiService } = require("../../service/lti");
 const { PlatformSettings } = require("../../../models/platformSettings");
 const ERROR_CODES = require("../../constant/error-messages");
@@ -14,28 +11,6 @@ jest.mock("../../../models/platformSettings", () => ({
   },
 }));
 jest.mock("axios");
-// jest.mock("ltijs", () => {
-//   const NamesAndRoles = {
-//     getMembers: jest.fn(),
-//   };
-//   const Grade = {
-//     getLineItems: jest.fn(),
-//     createLineItem: jest.fn(),
-//     submitScore: jest.fn(),
-//   };
-//   const DeepLinking = {
-//     createDeepLinkingForm: jest.fn(),
-//   };
-//   const registerPlatform = jest.fn();
-//   return {
-//     Provider: {
-//       NamesAndRoles,
-//       registerPlatform,
-//       Grade,
-//       DeepLinking,
-//     },
-//   };
-// });
 jest.mock("ltijs", () => {
   return {
     Provider: {
@@ -56,7 +31,6 @@ jest.mock("ltijs", () => {
 describe("service/lti", () => {
   beforeEach(() => {
     PlatformSettings.findOne.mockReset();
-  //  nock.cleanAll();
   });
   afterEach(() => {
     jest.resetAllMocks();
@@ -180,36 +154,6 @@ describe("service/lti", () => {
       lti.DeepLinking.createDeepLinkingForm.mockResolvedValueOnce(null);
       await ltiService.deeplink(req, res);
       expect(res.sendStatus).toHaveBeenCalledWith(500);
-    });
-  });
-
-  describe("play", () => {
-    let req;
-    let res;
-    jest.mock("axios");
-
-    beforeEach(() => {
-      req = {
-        query: {
-          c2eId: "id",
-        },
-      };
-
-      res = {
-        send: jest.fn(),
-        status: jest.fn().mockReturnThis(),
-      };
-    });
-
-    it("should make a successful request to the external API and send the response", async () => {
-      const mockData = { someKey: "someValue" };
-      jest.spyOn(axios, "get").mockResolvedValueOnce({ data: mockData });
-      await ltiService.play(req, res);
-      expect(axios.get).toHaveBeenCalledWith(
-        `${process.env.REACT_APP_BASEURL}play/${req.query.c2eId}`
-      );
-      expect(res.send).toHaveBeenCalledWith(mockData);
-      expect(res.status).not.toHaveBeenCalled();
     });
   });
 

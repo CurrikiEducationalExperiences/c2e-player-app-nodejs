@@ -1,10 +1,7 @@
-// const nock = require("nock");
-// const { mockSequelize } = require("../index");
 const bcrypt = require("bcrypt");
-
-//mockSequelize();
 const { AdminService } = require("../../service/admin");
 const { Admin } = require("../../../models/admins");
+//const passCom = require("joi-password-complexity");
 
 const ERROR_CODES = require("../../constant/error-messages");
 
@@ -16,14 +13,17 @@ jest.mock("../../../models/admins", () => ({
     findOne: jest.fn(),
   },
 }));
-
+// jest.mock("joi-password-complexity", () => {
+//   return {
+//       validate: { getMembers: jest.fn() },
+//     }
+// });
 describe("service/admins", () => {
   beforeEach(() => {
     Admin.create.mockReset();
     Admin.update.mockReset();
     Admin.destroy.mockReset();
     Admin.findOne.mockReset();
-   // nock.cleanAll();
   });
   afterEach(() => {
     jest.resetAllMocks();
@@ -34,7 +34,7 @@ describe("service/admins", () => {
       name: "Mehmood Hussain",
       phone: "+923000628070",
       email: "mehmood.hussain@tkxel246.com",
-      password: "password",
+      password: "Mehmood@Curriki1",
     };
 
     it(`should throw error ${ERROR_CODES.USER_ALREADY_EXISTS.message}`, async () => {
@@ -48,6 +48,7 @@ describe("service/admins", () => {
     });
 
     it(`should create a user`, async () => {
+     // passCom.validate.mockResolvedValueOnce(true)
       Admin.findOne.mockResolvedValueOnce(null);
       const response = await AdminService.register(registerationDetails);
       expect(response).toBeDefined();
@@ -106,10 +107,13 @@ describe("service/admins", () => {
 
   describe("updatePassword()", () => {
     it(`should update admin password`, async () => {
+      Admin.findOne.mockResolvedValueOnce({password: "asd"});
+      jest.spyOn(bcrypt, "compare").mockResolvedValueOnce(true);
       Admin.update.mockResolvedValueOnce(true);
       const response = await AdminService.updatePassword({
         loggedUser: { id: 2 },
-        phone: "00",
+        password: "Mehmood@Curriki1",
+        newPassword: "Mehmood@Curriki3",
       });
       expect(response).toBeDefined();
       expect(response).toEqual(true);

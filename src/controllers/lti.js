@@ -12,10 +12,6 @@ class ltiController {
     await ltiService.deeplink(req, res);
   }
 
-  static async play(req, res) {
-    await ltiService.play(req, res);
-  }
-
   static async info(req, res) {
     await ltiService.info(req, res);
   }

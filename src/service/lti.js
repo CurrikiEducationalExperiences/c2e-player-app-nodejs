@@ -84,19 +84,6 @@ class ltiService {
     }
   }
 
-  static async play(req, res) {
-    try {
-      const c2eId = req.query.c2eId;
-      const redirectUrl = `${process.env.REACT_APP_BASEURL}play/${c2eId}`;
-
-      const resp = await axios.get(redirectUrl);
-      return res.send(resp.data);
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).send(err.message);
-    }
-  }
-
   static async info(req, res) {
     const token = res.locals.token;
     const context = res.locals.context;
