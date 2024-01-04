@@ -133,7 +133,7 @@ class AdminService {
     } else {
       await ResetPasswordTokens.update(
         {
-          token: true,
+          token: _token,
         },
         {
           where: {
