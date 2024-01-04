@@ -47,7 +47,7 @@ const issueToken = (payload) => {
 
 const issueResetPassToken = (payload) => {
   return jwt.sign(payload, "someresetpasswordsecret", {
-    expiresIn: `1m`,
+    expiresIn: `30m`,
   });
 };
 

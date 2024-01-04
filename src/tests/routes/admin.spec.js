@@ -1,6 +1,6 @@
 const Router = require('../../routes/admin');
 
-describe('route/users', () => {
+describe('route/admin', () => {
   it('should have expected api for /register route', async () => {
     const path = '/register';
     const result = await Router.stack.find((s) => s.route.path === path);
@@ -19,6 +19,14 @@ describe('route/users', () => {
 
   it('should have expected api for /getProfile route', async () => {
     const path = '/getProfile';
+    const result = await Router.stack.find((s) => s.route.path === path);
+    expect(result).not.toBeUndefined();
+    expect(result.route.path).toEqual(path);
+    expect(result.route.methods).toEqual({ get: true });
+  });
+
+  it('should have expected api for /verifyResetPasswordToken route', async () => {
+    const path = '/verifyResetPasswordToken';
     const result = await Router.stack.find((s) => s.route.path === path);
     expect(result).not.toBeUndefined();
     expect(result.route.path).toEqual(path);

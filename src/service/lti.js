@@ -10,7 +10,7 @@ class ltiService {
       if (result) return res.send(result.members);
       return res.sendStatus(500);
     } catch (err) {
-      console.log(err.message);
+      // console.log(err.message);
       return res.status(500).send(err.message);
     }
   }
@@ -37,7 +37,7 @@ class ltiService {
         const lineItems = response.lineItems;
         if (lineItems.length === 0) {
           // Creating line item if there is none
-          console.log("Creating new line item");
+          // console.log("Creating new line item");
           const newLineItem = {
             scoreMaximum: 100,
             label: "Grade",
@@ -57,8 +57,8 @@ class ltiService {
       );
       return res.send(responseGrade);
     } catch (err) {
-      console.log(err.message);
-      return res.status(500).send({ err: err.message });
+      // console.log(err.message);
+      return res.status(500).send(err.message);
     }
   }
 
@@ -79,7 +79,7 @@ class ltiService {
       if (form) return res.send(form);
       return res.sendStatus(500);
     } catch (err) {
-      console.log(err.message);
+      // console.log(err.message);
       return res.status(500).send(err.message);
     }
   }

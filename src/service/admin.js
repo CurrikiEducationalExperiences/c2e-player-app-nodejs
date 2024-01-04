@@ -4,6 +4,8 @@ const ERROR_CODES = require("../constant/error-messages");
 const CustomError = require("../utils/error");
 const { Admin } = require("../../models/admins");
 const { ResetPasswordTokens } = require("../../models/resetPasswordTokens");
+const { emailService } = require("../utils/email");
+
 const {
   issueToken,
   issueResetPassToken,
@@ -64,9 +66,8 @@ class AdminService {
 
   static async verifyToken(params) {
     const _decodedToken = validatePasswordToken(params.token);
-    console.log({_decodedToken})
-    if(!_decodedToken) throw new CustomError(ERROR_CODES.TOKEN_FAILED);
-    if(_decodedToken === 404) throw new CustomError(ERROR_CODES.TOKEN_FAILED);
+    if (!_decodedToken) throw new CustomError(ERROR_CODES.TOKEN_FAILED);
+    if (_decodedToken === 404) throw new CustomError(ERROR_CODES.TOKEN_FAILED);
     const _tokenCheck = await ResetPasswordTokens.findOne({
       where: { token: params.token },
       raw: true,
@@ -74,7 +75,7 @@ class AdminService {
     if (!_tokenCheck) {
       throw new CustomError(ERROR_CODES.TOKEN_FAILED);
     }
-    return true
+    return true;
   }
 
   static async updatePassword(params) {
@@ -129,11 +130,10 @@ class AdminService {
         email: params.email,
         token: _token,
       });
-      return true;
     } else {
       await ResetPasswordTokens.update(
         {
-          token: _token,
+          token: true,
         },
         {
           where: {
@@ -141,8 +141,13 @@ class AdminService {
           },
         }
       );
-      return true;
     }
+    await emailService.sendEmail({
+      email: params.email,
+      subject: "Password Reset Link",
+      body: `Please use this link to reset your account password. https://c2e-player-app-nodejs-stage.curriki.org/api/v1/admin/verifyResetPasswordToken?=${_token}`
+    });
+    return true
   }
 
   static async resetPassword(params) {
@@ -159,8 +164,8 @@ class AdminService {
     }
     // verify the token
     const _decodedToken = validatePasswordToken(params.token);
-    console.log({_decodedToken})
-    if(_decodedToken === 404) throw new CustomError(ERROR_CODES.RESET_PASS_LINK_EXPIRED);
+    if (_decodedToken === 404)
+      throw new CustomError(ERROR_CODES.RESET_PASS_LINK_EXPIRED);
     const _profile = await Admin.findOne({
       where: { email: _decodedToken.email },
       raw: true,
