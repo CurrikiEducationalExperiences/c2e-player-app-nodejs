@@ -7,6 +7,12 @@ COPY ./package*.json ./
 RUN npm install
 COPY . .
 
+# Run migrations
+RUN npm run migrate
+
+# Run tests
+RUN npm run test
+
 CMD ["npm", "run", "start"]
 
 # RUN npm run build
