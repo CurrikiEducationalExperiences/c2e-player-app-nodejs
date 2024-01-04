@@ -14,6 +14,9 @@ module.exports = {
   USER_ALREADY_EXISTS: {
     message: "An account with this email already exists!",
   },
+  TODO_ALREADY_EXISTS: {
+    message: "An Todo entry with this name already exists!",
+  },
   PASS_RULES_ERROR: {
     message:   "Password Should Be Betweem 8 - 26 Characters And Must Include Atleast One Lower Case, Upper Case, Numeric And Symbol",
   },

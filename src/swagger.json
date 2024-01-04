@@ -1179,6 +1179,76 @@
           }
         }
       }
+    },
+    "/api/v1/todo/create": {
+      "post": {
+        "x-swagger-router-controller": "users",
+        "operationId": "user-register",
+        "tags": ["ToDo Routes"],
+        "summary": "Account Registration Endpoint",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "User details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Jhon Doe"
+                },
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "result": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "An todo with this name already exists!"
+                },
+                "result": {
+                  "type": "boolean",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
