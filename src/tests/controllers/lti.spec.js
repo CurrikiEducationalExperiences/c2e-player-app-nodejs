@@ -4,11 +4,7 @@ const { ltiService } = require("../../service/lti");
 describe("controller/routes", () => {
   describe("grade", () => {
     it("should submit a grade", async () => {
-      const req = {
-        body: {
-          grade: "A",
-        },
-      };
+      const req = {};
       const result = {
         code: 200,
         data: [],
@@ -26,10 +22,7 @@ describe("controller/routes", () => {
 
   describe("members", () => {
     it("should get members", async () => {
-      const req = {
-        body: {
-        },
-      };
+      const req = {};
       const result = {
         code: 200,
         data: [],
@@ -47,14 +40,7 @@ describe("controller/routes", () => {
 
   describe("deeplink", () => {
     it("should return deeplink form", async () => {
-      const req = {
-        body: {
-          title: "A",
-          name: "B",
-          value: "C",
-          id: "D",
-        },
-      };
+      const req = {};
       const result = {
         code: 200,
         data: [],
@@ -72,11 +58,7 @@ describe("controller/routes", () => {
 
   describe("info", () => {
     it("should return info", async () => {
-      const req = {
-        body: {
-          grade: "A",
-        },
-      };
+      const req = {};
       const result = {
         code: 200,
         data: [],
@@ -94,11 +76,7 @@ describe("controller/routes", () => {
 
   describe("resources", () => {
     it("should return resources", async () => {
-      const req = {
-        body: {
-          grade: "A",
-        },
-      };
+      const req = {};
       const result = {
         code: 200,
         data: [],
@@ -116,11 +94,7 @@ describe("controller/routes", () => {
 
   describe("stream", () => {
     it("should stream a file", async () => {
-      const req = {
-        body: {
-          grade: "A",
-        },
-      };
+      const req = {};
       const result = {
         code: 200,
         data: [],
@@ -138,11 +112,7 @@ describe("controller/routes", () => {
 
   describe("xapi", () => {
     it("should return xapi statements", async () => {
-      const req = {
-        body: {
-          grade: "A",
-        },
-      };
+      const req = {};
       const result = {
         code: 200,
         data: [],
@@ -160,11 +130,7 @@ describe("controller/routes", () => {
 
   describe("platform register", () => {
     it("should register a platform", async () => {
-      const req = {
-        body: {
-          grade: "A",
-        },
-      };
+      const req = {};
       const result = {
         code: 200,
         data: [],

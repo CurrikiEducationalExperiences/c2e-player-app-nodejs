@@ -97,7 +97,6 @@ describe("service/lti", () => {
           },
         },
         send: jest.fn(),
-        sendStatus: jest.fn(),
         status: jest.fn().mockReturnThis(),
       };
     });
@@ -111,7 +110,7 @@ describe("service/lti", () => {
       expect(res.send).toHaveBeenCalledWith(true);
     });
 
-    it("should create and submit grade when lineitem id is not received", async () => {
+    it("should create and submit grade when lineitem id is not received and line items from lti is not an empty array", async () => {
       res.locals.token.platformContext.endpoint.lineitem = null;
       lti.Grade.getLineItems.mockResolvedValueOnce({
         lineItems: [{ id: 1212 }],
@@ -119,6 +118,21 @@ describe("service/lti", () => {
       lti.Grade.submitScore.mockResolvedValueOnce(true);
       await ltiService.grade(req, res);
       expect(res.send).toHaveBeenCalledWith(true);
+    });
+
+    it("should create and submit grade when lineitem id is received", async () => {
+      res.locals.token.platformContext.endpoint.lineitem = true;
+      lti.Grade.submitScore.mockResolvedValueOnce(true);
+      await ltiService.grade(req, res);
+      expect(res.send).toHaveBeenCalledWith(true);
+    });
+
+    it("should handle errors and send a 500 status with the error message", async () => {
+      const errorMessage = "An error occurred";
+      res.locals.token.platformContext.endpoint.lineitem = true;
+      lti.Grade.submitScore.mockResolvedValueOnce(new Error(errorMessage));
+      await ltiService.grade(req, res);
+      expect(res.send).toHaveBeenCalled();
     });
   });
 
@@ -141,6 +155,7 @@ describe("service/lti", () => {
         },
         send: jest.fn(),
         sendStatus: jest.fn(),
+        status: jest.fn().mockReturnThis(),
       };
     });
 
@@ -154,6 +169,13 @@ describe("service/lti", () => {
       lti.DeepLinking.createDeepLinkingForm.mockResolvedValueOnce(null);
       await ltiService.deeplink(req, res);
       expect(res.sendStatus).toHaveBeenCalledWith(500);
+    });
+
+    it("should send 500 in case of error", async () => {
+      const errorMessage = 'An Error Occured'
+      lti.DeepLinking.createDeepLinkingForm.mockResolvedValueOnce(new Error(errorMessage));
+      await ltiService.deeplink(req, res);
+      expect(res.send).toHaveBeenCalled();
     });
   });
 
@@ -204,6 +226,13 @@ describe("service/lti", () => {
         send: jest.fn(),
       };
     });
+
+    it("should return error for invalid query params", async () => {
+      req.query.query = 1;
+      await ltiService.resources(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+
     it("should return error for no matching platform", async () => {
       PlatformSettings.findOne.mockResolvedValueOnce(null);
       await ltiService.resources(req, res);
