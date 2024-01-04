@@ -4,6 +4,7 @@
   "description": "C2E Player Application",
   "main": "index.js",
   "scripts": {
+    "migrate": "npx sequelize-cli db:migrate",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
