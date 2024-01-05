@@ -1,7 +1,7 @@
 {
-  "name": "c2e-player-app",
+  "name": "boilerplate",
   "version": "1.0.0",
-  "description": "C2E Player Application",
+  "description": "boilerplate",
   "main": "index.js",
   "scripts": {
     "migrate": "npx sequelize-cli db:migrate",
@@ -11,27 +11,19 @@
     "start": "env DEBUG=provider:* node ./src/index.js",
     "start:nodemon": "env DEBUG=provider:* ./node_modules/nodemon/bin/nodemon.js index.js"
   },
-  "keywords": [
-    "lti",
-    "ims",
-    "ltijs",
-    "1.3",
-    "imslti"
-  ],
-  "author": "cvmcosta",
+  "author": "curriki",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "joi": "^17.11.0",
     "joi-password-complexity": "^5.2.0",
-    "ltijs": "^5.9.1",
-    "ltijs-sequelize": "^2.4.3",
-    "nock": "^13.4.0",
+    "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.8",
-    "swagger-jsdoc": "^6.2.8",
+    "pg": "^8.11.3",
+    "sequelize": "^6.35.2",
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
