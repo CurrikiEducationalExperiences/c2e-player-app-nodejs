@@ -43,7 +43,14 @@ const config = {
   // ],
 
   // An object that configures minimum threshold enforcement for coverage results
-  // coverageThreshold: undefined,
+   coverageThreshold: {
+    "global": {
+      "branches": 70,
+      "functions": 70,
+      "lines": 70,
+      "statements": 70
+    }
+  },
 
   // A path to a custom dependency extractor
   // dependencyExtractor: undefined,
@@ -151,7 +158,7 @@ const config = {
   // testEnvironmentOptions: {},
 
   // Adds a location field to test results
-  // testLocationInResults: false,
+   testLocationInResults: true,
 
   // The glob patterns Jest uses to detect test files
   // testMatch: [
@@ -192,7 +199,7 @@ const config = {
   // watchPathIgnorePatterns: [],
 
   // Whether to use watchman for file crawling
-  // watchman: true,
+   watchman: true,
 };
 
 module.exports = config;

@@ -142,12 +142,13 @@ class AdminService {
         }
       );
     }
-    await emailService.sendEmail({
+    const response = await emailService.sendEmail({
       email: params.email,
       subject: "Password Reset Link",
-      body: `Please use this link to reset your account password. https://c2e-player-app-nodejs-stage.curriki.org/api/v1/admin/verifyResetPasswordToken?=${_token}`
+      body: `Please use this link to reset your account password. https://c2e-player-app-nodejs-stage.curriki.org/api/v1/admin/verifyResetPasswordToken?=${_token}`,
     });
-    return true
+    if (response === "ok") return true;
+    else return response;
   }
 
   static async resetPassword(params) {
