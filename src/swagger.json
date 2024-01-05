@@ -6,7 +6,7 @@
   },
   "schemes": ["http", "https"],
   "paths": {
-    "/api/v1/users/register": {
+    "/api/v1/admin/register": {
       "post": {
         "x-swagger-router-controller": "users",
         "operationId": "user-register",
@@ -20,14 +20,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Jhon Doe"
-                },
-                "phone": {
-                  "type": "string",
-                  "example": "+000000000000"
-                },
                 "email": {
                   "type": "string",
                   "example": "jhondoe@curriki.com"
@@ -60,11 +52,31 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "An account with this email already exists!"
+                },
+                "result": {
+                  "type": "boolean",
+                  "example": null
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/v1/users/login": {
+    "/api/v1/admin/login": {
       "post": {
         "x-swagger-router-controller": "users",
         "operationId": "user-login",
@@ -134,7 +146,7 @@
         }
       }
     },
-    "/api/v1/users/getProfile": {
+    "/api/v1/admin/getProfile": {
       "get": {
         "x-swagger-router-controller": "users",
         "operationId": "View Profile",
@@ -168,9 +180,7 @@
                   "type": "object",
                   "example": {
                     "id": 1,
-                    "name": "Jhon Doe",
                     "email": "jhondoe@curriki.com",
-                    "phone": "+00000000000",
                     "createdAt": "2023-12-12T10:23:55.242Z",
                     "updatedAt": "2023-12-12T11:09:37.077Z"
                   }
@@ -181,82 +191,21 @@
         }
       }
     },
-    "/api/v1/users/update": {
-      "patch": {
+    "/api/v1/admin/verifyResetPasswordToken": {
+      "get": {
         "x-swagger-router-controller": "users",
-        "operationId": "Update Profile",
+        "operationId": "Verify Reset Password Token",
         "tags": ["Admin Routes"],
-        "summary": "Update Profile",
+        "summary": "Verify Reset Password Token",
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Authorization",
-            "type": "string",
-            "default": "Bearer {token}",
-            "required": true
-          },
-          {
-            "name": "payload",
-            "in": "body",
-            "description": "User credentials",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "phone": {
-                  "type": "string",
-                  "example": "0000000000001"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Response Format",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer",
-                  "example": 200
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Success"
-                },
-                "result": {
-                  "type": "boolean",
-                  "example": true
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/users/delete/{id}": {
-      "delete": {
-        "x-swagger-router-controller": "users",
-        "operationId": "Delete Profile",
-        "tags": ["Admin Routes"],
-        "summary": "Delete Profile",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Authorization",
-            "type": "string",
-            "default": "Bearer {token}",
-            "required": true
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the user to delete",
+            "name": "token",
+            "in": "query",
+            "description": "token",
             "required": true,
             "schema": {
-              "type": "integer"
+              "type": "string",
+              "default": "token"
             }
           }
         ],
@@ -282,25 +231,261 @@
             }
           },
           "400": {
+              "description": "Response Format",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "integer",
+                    "example": 400
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Could not verify the token"
+                  },
+                  "result": {
+                    "type": "boolean",
+                    "example": null
+                  }
+                }
+              }
+            }
+        }
+      }
+    },
+    "/api/v1/admin/updatePassword": {
+      "patch": {
+        "x-swagger-router-controller": "users",
+        "operationId": "Update Acount password",
+        "tags": ["Admin Routes"],
+        "summary": "Update Account Password",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "type": "string",
+            "default": "Bearer {token}",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "User credentials",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "example": "StrongPassword1@"
+                },
+                "newPassword": {
+                  "type": "string",
+                  "example": "StrongPassword2@"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
             "description": "Response Format",
             "schema": {
               "type": "object",
               "properties": {
                 "code": {
                   "type": "integer",
-                  "example": 400
+                  "example": 200
                 },
                 "message": {
                   "type": "string",
-                  "example": "Cannot delete logged user!"
+                  "example": "Success"
                 },
                 "result": {
-                  "type": null,
-                  "example": null
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+              "description": "Response Format",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "integer",
+                    "example": 400
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Incorrect password!"
+                  },
+                  "result": {
+                    "type": "boolean",
+                    "example": null
+                  }
+                }
+              }
+            }      
+        }
+      }
+    },
+    "/api/v1/admin/forgetPassword": {
+      "post": {
+        "x-swagger-router-controller": "users",
+        "operationId": "Request Reset Password Link",
+        "tags": ["Admin Routes"],
+        "summary": "Request Reset Password Link",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "User credentials",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "mehmoodce@gmail.com"
                 }
               }
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "result": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": [
+            {
+              "description": "Response Format",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "integer",
+                    "example": 400
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Incorrect password!"
+                  },
+                  "result": {
+                    "type": "boolean",
+                    "example": null
+                  }
+                }
+              }
+            },
+            {
+              "description": "Response Format",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "integer",
+                    "example": 400
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "You cannot set your current password as your new password!"
+                  },
+                  "result": {
+                    "type": "boolean",
+                    "example": null
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "/api/v1/admin/resetPassword": {
+      "post": {
+        "x-swagger-router-controller": "users",
+        "operationId": "Reset Password",
+        "tags": ["Admin Routes"],
+        "summary": "Reset Password",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "User credentials",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "example": "Mehmood@Curriki1@"
+                },
+                "token": {
+                  "type": "string",
+                  "example": "token"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "result": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          },
+          "400": {
+              "description": "Response Format",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "integer",
+                    "example": 400
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Reset password link Expired"
+                  },
+                  "result": {
+                    "type": "boolean",
+                    "example": null
+                  }
+                }
+              }
+            }
         }
       }
     },
@@ -335,9 +520,7 @@
                   "email": "jhondoe@curriki.org",
                   "user_id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
                   "lti11_legacy_user_id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
-                  "roles": [
-                    "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
-                  ]
+                  "roles": ["xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"]
                 }
               ]
             }
@@ -502,9 +685,7 @@
                       "id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
                       "label": "audio-recorder",
                       "title": "Audio Recorder",
-                      "type": [
-                        "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
-                      ],
+                      "type": ["xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"],
                       "validation_context": null,
                       "errors": {
                         "errors": {}
@@ -590,9 +771,7 @@
                     "id": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx",
                     "label": "audio-recorder",
                     "title": "Audio Recorder",
-                    "type": [
-                      "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
-                    ],
+                    "type": ["xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"],
                     "validation_context": null,
                     "errors": {
                       "errors": {}
@@ -956,38 +1135,38 @@
               "example": {
                 "title": "Curriki Educational Experiences",
                 "scopes": [
-                    "https://purl.imsglobal.org/spec/lti-ags/scope/lineitem",
-                    "https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly",
-                    "https://purl.imsglobal.org/spec/lti-ags/scope/score",
-                    "https://purl.imsglobal.org/spec/lti-ags/scope/result.readonly",
-                    "https://purl.imsglobal.org/spec/lti-ags/scope/lineitem.readonly"
+                  "https://purl.imsglobal.org/spec/lti-ags/scope/lineitem",
+                  "https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly",
+                  "https://purl.imsglobal.org/spec/lti-ags/scope/score",
+                  "https://purl.imsglobal.org/spec/lti-ags/scope/result.readonly",
+                  "https://purl.imsglobal.org/spec/lti-ags/scope/lineitem.readonly"
                 ],
                 "extensions": [
-                    {
-                        "platform": "canvas.instructure.com",
-                        "settings": {
-                            "platform": "canvas.instructure.com",
-                            "text": "Curriki Educational Experiences",
-                            "icon_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/icon.svg",
-                            "placements": [
-                                {
-                                    "text": "Curriki Educational Experiences",
-                                    "icon_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/icon.svg",
-                                    "placement": "link_selection",
-                                    "message_type": "LtiDeepLinkingRequest",
-                                    "target_link_uri": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
-                                },
-                                {
-                                    "text": "Curriki Educational Experiences",
-                                    "icon_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/icon.svg",
-                                    "placement": "assignment_selection",
-                                    "message_type": "LtiDeepLinkingRequest",
-                                    "target_link_uri": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
-                                }
-                            ]
+                  {
+                    "platform": "canvas.instructure.com",
+                    "settings": {
+                      "platform": "canvas.instructure.com",
+                      "text": "Curriki Educational Experiences",
+                      "icon_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/icon.svg",
+                      "placements": [
+                        {
+                          "text": "Curriki Educational Experiences",
+                          "icon_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/icon.svg",
+                          "placement": "link_selection",
+                          "message_type": "LtiDeepLinkingRequest",
+                          "target_link_uri": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
                         },
-                        "privacy_level": "public"
-                    }
+                        {
+                          "text": "Curriki Educational Experiences",
+                          "icon_url": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx/icon.svg",
+                          "placement": "assignment_selection",
+                          "message_type": "LtiDeepLinkingRequest",
+                          "target_link_uri": "xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx"
+                        }
+                      ]
+                    },
+                    "privacy_level": "public"
+                  }
                 ],
                 "public_jwk": {},
                 "description": "Curriki Educational Experiences LTI 1.3 Tool",
