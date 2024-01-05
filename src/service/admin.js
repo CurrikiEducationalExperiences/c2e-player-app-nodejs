@@ -5,7 +5,7 @@ const CustomError = require("../utils/error");
 const { Admin } = require("../../models/admins");
 const { ResetPasswordTokens } = require("../../models/resetPasswordTokens");
 const { emailService } = require("../utils/email");
-
+const CONST_VARS = require("../constant/constant")
 const {
   issueToken,
   issueResetPassToken,
@@ -144,8 +144,8 @@ class AdminService {
     }
     const response = await emailService.sendEmail({
       email: params.email,
-      subject: "Password Reset Link",
-      body: `Please use this link to reset your account password. ${process.env.REACT_APP_BASEURL}reset-password?token=${_token}`,
+      subject: CONST_VARS.CONSTANTS.FORGET_EMAIL_SUBJECT,
+      body: CONST_VARS.CONSTANTS.FORGET_EMAIL_BODY+_token,
     });
     if (response === "ok") return true;
     else return response;
