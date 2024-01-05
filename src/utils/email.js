@@ -4,10 +4,10 @@ require("dotenv").config();
 class emailService {
     static async sendEmail(params) {
         let transporter = nodemailer.createTransport({
-            service: process.env.EMAIL_SERVICE,
+            service: process.env.SMTP_HOST,
             auth: {
-                user: process.env.EMAIL,
-                pass: process.env.EMAIL_PASSWORD,
+                user: process.env.SMTP_USERNAME,
+                pass: process.env.SMTP_PASSWORD,
             },
         });
 
