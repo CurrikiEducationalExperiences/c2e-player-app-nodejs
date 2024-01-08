@@ -91,14 +91,14 @@ lti.app.use(bodyParser.urlencoded({ extended: false }));
 ////////////// PARSE application/json /////////////
 lti.app.use(
   bodyParser.json({
-    limit: "2000kb",
+    limit: `${process.env.BODYPARSER_LIMIT}kb`,
   })
 );
 
 ////////////////////// CORS //////////////////////
 lti.app.use(
   cors({
-    maxAge: 2628000, //  Access-Control-Max-Age: 1 month
+    maxAge: process.env.CORS_MAX_AGE_SEC,
   })
 );
 
