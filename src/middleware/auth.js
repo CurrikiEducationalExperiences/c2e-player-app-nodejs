@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const ERROR_CODES = require("../constant/error-messages");
 const CustomError = require("../utils/error");
 const { Admin } = require("../../models/admins");
-const { ResetPasswordTokens } = require("../../models/resetPasswordTokens");
 const authMiddleware = async (req, res, next) => {
   try {
     if (!req.headers.authorization) {
@@ -40,14 +40,14 @@ const authMiddleware = async (req, res, next) => {
 };
 
 const issueToken = (payload) => {
-  return jwt.sign(payload, "somesecret", {
-    expiresIn: `24h`,
+  return jwt.sign(payload, process.env.ADMIN_TOKEN_SECRET_KEY, {
+    expiresIn: `${process.env.ADMIN_TOKEN_EXPIRY_H}h`,
   });
 };
 
 const issueResetPassToken = (payload) => {
-  return jwt.sign(payload, "someresetpasswordsecret", {
-    expiresIn: `30m`,
+  return jwt.sign(payload, process.env.RESET_PASSWORD_TOKEN_SECRET_KEY, {
+    expiresIn: `${process.env.RESET_PASSWORD_TOKEN_EXPIRY_MIN}m`,
   });
 };
 
@@ -56,7 +56,7 @@ const validatePasswordToken = (token) => {
     return 404;
   }
   try {
-    const _decoded = jwt.verify(token, 'someresetpasswordsecret');
+    const _decoded = jwt.verify(token, process.env.RESET_PASSWORD_TOKEN_SECRET_KEY);
     return _decoded;
   }
   catch (err) {
@@ -66,7 +66,7 @@ const validatePasswordToken = (token) => {
 
 
 const verify = async (token, done) => {
-  jwt.verify(token, "somesecret", {}, async (err, decoded) => {
+  jwt.verify(token, process.env.ADMIN_TOKEN_SECRET_KEY, {}, async (err, decoded) => {
     if (err) {
       switch (err.message) {
         case "jwt expired":
