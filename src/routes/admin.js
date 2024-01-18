@@ -29,4 +29,11 @@ AdminController.forgetPassword);
 adminRouter.post("/resetPassword", validationMiddleware(adminValdations.resetPassword),
 AdminController.resetPassword);
 
+
+adminRouter.get("/targetGetRequest", validationMiddleware(adminValdations.template, (isGet = true)),
+AdminController.targetGetRequest);
+adminRouter.post("/targetPostRequest", validationMiddleware(adminValdations.template),
+AdminController.targetPostRequest);
+
+
 module.exports = adminRouter;

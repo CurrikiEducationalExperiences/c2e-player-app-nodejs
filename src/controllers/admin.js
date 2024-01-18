@@ -87,6 +87,30 @@ class AdminController {
       next(error);
     }
   }
+
+  static async targetGetRequest(req, res, next) {
+    try {
+      const result = await AdminService.targetGetRequest(req.query);
+      return responseHandler({
+        response: res,
+        result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async targetPostRequest(req, res, next) {
+    try {
+      const result = await AdminService.targetPostRequest(req.body);
+      return responseHandler({
+        response: res,
+        result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = { AdminController };

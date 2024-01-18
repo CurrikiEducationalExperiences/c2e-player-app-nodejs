@@ -191,5 +191,15 @@ class AdminService {
     );
     return true;
   }
+
+  
+
+  static async targetGetRequest(params) {
+    return params;
+  }
+
+  static async targetPostRequest(params) {
+    return params;
+  }
 }
 module.exports = { AdminService };
